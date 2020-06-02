@@ -26,9 +26,9 @@ const findAllOpenASR = async (userId, res) => {
     const authUser = await findUserById(userId);    
     if (authUser.role === 1 || authUser.role === 2) {
       // asr = await ASR.findAll({ where: { status: {[Op.ne]: 3} }, raw: true });
-      asr = await ASR.findAll({ where: { status: [1,2,5,9,10]}, raw: true, order: [['id', 'DESC']]});     
+      asr = await ASR.findAll({ where: { status: [1,2,4,5,6]}, raw: true, order: [['id', 'DESC']]});     
     } else {
-      asr = await ASR.findAll({ where: { email_open: {[Op.eq] : authUser.email}, status: [1,2,5,9,10] } , raw: true, order: [['id', 'DESC']]});
+      asr = await ASR.findAll({ where: { email_open: {[Op.eq] : authUser.email}, status: [1,2,4,5,6] } , raw: true, order: [['id', 'DESC']]});
     }
     
     let mappedASR = await remapData(asr);
