@@ -79,6 +79,7 @@ const remapData = async (data) => {
       status: el.status_name,
       solution: el.solution,
       root_problem: el.root_problem,
+      closeStatusName: el.closeStatusName      
     })
   });  
   return formattedData;

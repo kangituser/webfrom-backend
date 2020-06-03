@@ -75,21 +75,22 @@ const serviceRequestProcessed = (data) => {
 }
 
 const serviceRequestClosed = (data) => {
+  console.log(data);
+  
   let title = `קריאה שמספרה ${data.srId} נסגרה`;
   let mail = data.email;  
   let output = `
   <div style="direction: rtl;">
   <p>שלום,</p>
   
-  <p>קריאה שמספרה ${data.srId} נסגרה</p>
+  <p>קריאה שמספרה ${data.srId} נסגרה בסטאטוס ${data.closeStatusName}</p>
   <p>פרטי הקריאה:</p>
 
+  <p>כותרת: ${data.title}</p>
   <p>קטגוריה: ${data.category} ${data.subCategory}</p>
   <p>מודול: ${data.module}</p>
-  <p>כותרת: ${data.title}</p>
   <p>תיאור: ${data.description}</p>
-  <p>משתמש בקשה: ${data.name}</p>
-  <p>דחיפות: ${data.impact}</p>
+  
   <p>בברכה,</p>
   <p>צוות מערכות מידע</p></div>
   `

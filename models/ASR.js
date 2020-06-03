@@ -92,6 +92,14 @@ ASR.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    closeStatusId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    closeStatusName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     sequelize,
@@ -101,7 +109,7 @@ ASR.init(
   }
 );
 
-// ASR.sync({ alter: true })
+ASR.sync({ alter: false })
 
 
 module.exports = ASR;

@@ -7,6 +7,7 @@ const IMPACT = require('../../models/impact');
 const CATEGORIES = require('../../models/categories');
 const { mainCatRouter } = require('./cat-router');
 const ASR = require('../../models/ASR');
+const CLOSE_STATUS = require('../../models/close-status');
 const { findState, findASRById } = require("../../shared/query-store");
 
 const createEditState = async srId => {
@@ -40,6 +41,7 @@ const updateASR = async (res, body) => {
   const main = await CATEGORIES.findOne({ where: { catId: body.mainCategory }});  
   const sub = await mainCatRouter(main.catId, body.subCategory);  
   const asr = await ASR.findOne({ where: { id: body.srId}});
+  const close_status = await CLOSE_STATUS.findOne({ where: { statusId: body.closedStatus }})
     
   asr.title = body.title;
   asr.problem_type = main.catName;
@@ -56,6 +58,8 @@ const updateASR = async (res, body) => {
   asr.dateToIssue = body.dateToIssue;    
   asr.containerName = body.containerName;    
   asr.blobName = body.blobName;    
+  asr.closeStatusId = close_status.statusId;
+  asr.closeStatusName = close_status.statusName;
 
   await asr.save();
   return asr;
@@ -81,7 +85,8 @@ const sendASRDeitedMail = async (updatedASR, authUser, ASRtoUpdate, isChanged, r
     impact: impact.affectionName,
     isChanged: isChanged,
     updated: processed,
-    closed: closed
+    closed: closed,
+    closeStatusName: updatedASR.closeStatusName
   }, route);
 };
 
@@ -100,17 +105,17 @@ const editASRequest = async (body, user, originalUrl, res) => {
      } else {
        if (stats.includes(state.syncStatus)) { 
          const updatedASR = await findASRById(body.srId);                 
-          const editedASR = await updateASR(res, body); 
+          const editedASR = await updateASR(res, body);                     
           if (updatedASR.impact !== body.affection) { 
            await LOG.create({ old_value: updatedASR.impact, new_value: body.affection, date_edited: new Date(), edited_by: user.fullName, srId: body.srId })           
           }
           await updateStateToEdit(state)           
           if (editedASR.status === 2) {
-            sendASRDeitedMail(updatedASR, user, body, true, route, true, false);
+            sendASRDeitedMail(editedASR, user, body, true, route, true, false);
           } else if (editedASR.status === 3) {            
-            sendASRDeitedMail(updatedASR, user, body, true, route, false, true);
+            sendASRDeitedMail(editedASR, user, body, true, route, false, true);
           } else {
-            sendASRDeitedMail(updatedASR, user, body, true, route, false, false);
+            sendASRDeitedMail(editedASR, user, body, true, route, false, false);
           }
         status = 201;
         message = 'success';
