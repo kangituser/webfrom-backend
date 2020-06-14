@@ -1,12 +1,16 @@
 const TOKEN = require("../../models/token");
 const USER = require("../../models/user");
+const { Op } = require('sequelize')
 const { findUserById, findUserRoleById } = require("../../shared/query-store");
  
 const responseHandler = (res, status, obj) => res.status(status).send(obj);
 
 const GetAll = async (req, res, next) => {
   try {
-    responseHandler(res, 200,{ users: await USER.findAll() })
+    const users = await USER.findAll();
+    users.sort((a,b) => b.id - a.id)
+
+    responseHandler(res, 200,{ users: users })
   } catch (err) {
     responseHandler(res, 500,{ message: err.message })
   }
