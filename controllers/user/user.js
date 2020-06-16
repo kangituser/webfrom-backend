@@ -1,7 +1,7 @@
 const TOKEN = require("../../models/token");
 const USER = require("../../models/user");
-const { Op } = require('sequelize')
 const { findUserById, findUserRoleById } = require("../../shared/query-store");
+const { messageRoutelet } = require('../../mail/massage-routelet')
  
 const responseHandler = (res, status, obj) => res.status(status).send(obj);
 
@@ -24,15 +24,15 @@ const Update = async (req, res, next) => {
     active: req.body.user.isActive,
     phone: req.body.user.phoneNumber
   }
-  let status;
-  let message;
+  let status, message;
+  const originalUrl = req.originalUrl;
 
   try {
     const loggedIn = await findUserById(req.id);
     if (loggedIn.role === 1) {
       const user = await findUserById(req.body.user.id);
       if (user) {
-        await EditUser(user, USERToUpdate);        
+        await EditUser(user, USERToUpdate, originalUrl);        
         status = 201;
         message = `${USERToUpdate.name} successfully updated`;
       } else {
@@ -77,13 +77,16 @@ const Delete = async ({ id, body: { userId }}, res, next) => {
 
 const GetRole = async ({ id }, res, next) => responseHandler(res, 200, await findUserRoleById(id));
 
-const EditUser = async (user, USERToUpdate) => {
+const EditUser = async (user, USERToUpdate, originalUrl) => {
   user.email = USERToUpdate.email;
   user.fullName = USERToUpdate.name;
   user.isActive = USERToUpdate.active;
   user.role = USERToUpdate.userRole;
   user.phoneNumber = USERToUpdate.phone;
   const edited = await user.save()
+  if (USERToUpdate.isActive != 0) {
+    messageRoutelet(USERToUpdate, originalUrl , null, 'activated');
+  }
   return edited;
 }
 

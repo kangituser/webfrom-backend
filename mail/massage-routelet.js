@@ -9,7 +9,7 @@ const messageRoutelet = (data, route, pwd, state) => {
   } else if (route.includes('user')) {
     email = dispenser.userMsgRouter(data, route, state, pwd);
   }
-   console.log(email);
+  //  console.log(email);
    
   mailSender(email);
 };

@@ -127,10 +127,29 @@ const userMsgRouter = (data, route, state, pwd) => {
     return userPwdUpdateRequest(data, pwd);
   }  else if (route.includes('update') || route.includes('reset')) {
     return pwdChanged(data);
+  } else if (route.includes('update') && state.includes('activated')) {
+    return userActivated(data);
   }
 }
 
-const pwdChanged = (data) => {
+const userActivated = data => {
+  let title = `אישור הרשמה למערכת לניהול קריאות שירות`;
+  let mail = data.email;  
+  let ref = '<a href="http://eng.kan.org.il">למערכת</a>';
+  let output = `
+  <div style="direction: rtl;">
+  <p>שלום ${data.name},</p>
+  <p>בקשתך לרישום אושרה ע"י מנהל המערכת.</p>
+  <p>שם משתמש: ${data.name}</p>
+  <p>ניתן להיכנס למערכת ע"י הקישור הבא: ${ref}</p>
+  
+  <p>בברכה,</p>
+  <p>צוות מערכות מידע</p></div>
+  `  
+  return prepareMailBody(mail, title, output);
+}
+
+const pwdChanged = data => {
   let title = `איפוס סיסמה למערכת לניהול קריאות שירות`;
   let mail = data.email;  
    let output = `
@@ -162,7 +181,7 @@ const userPwdUpdateRequest = (data, pwd) => {
 }
 
 
-const userAccepted = (data) => {
+const userAccepted = data => {
   let title = `אישור הרשמה למערכת לניהול קריאות שירות`;
   let mail = data.email;  
   let ref = '<a href="http://eng.kan.org.il">למערכת</a>';
@@ -179,7 +198,7 @@ const userAccepted = (data) => {
   return prepareMailBody(mail, title, output);
 }
 
-const userWaiting = (data) => {
+const userWaiting = data => {
   let title = `שלום ${data.name}`;
   let mail = data.email;  
   let output = `
@@ -194,7 +213,7 @@ const userWaiting = (data) => {
   return prepareMailBody(mail, title, output);
 }
 
-const registerRequest = (data) => {
+const registerRequest = data => {
   console.log(data);
   
   let title = `משתמש חדש מחכה לאישורך`;
