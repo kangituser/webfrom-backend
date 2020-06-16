@@ -214,15 +214,14 @@ const userWaiting = data => {
 }
 
 const registerRequest = data => {
-  console.log(data);
-  
+  let ref = '<a href="http://eng.kan.org.il">למערכת</a>';
   let title = `משתמש חדש מחכה לאישורך`;
   let admins = data.email;  
   let output = `
   <div style="direction: rtl;">
   <p>שלום רב,</p>
   <p>מחכה לאישורך משתמש חדש בשם ${data.name}</p>
-  <p>יש להכנס למערכת על מנת לאשר </p>
+  <p>ניתן להיכנס למערכת ע"י הקישור הבא: ${ref}</p>
   
   <p>בברכה,</p>
   <p>צוות מערכות מידע</p></div>
