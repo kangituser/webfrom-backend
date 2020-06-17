@@ -78,13 +78,14 @@ const Delete = async ({ id, body: { userId }}, res, next) => {
 const GetRole = async ({ id }, res, next) => responseHandler(res, 200, await findUserRoleById(id));
 
 const EditUser = async (user, USERToUpdate, originalUrl) => {
+  const oldActive = user.isActive;
   user.email = USERToUpdate.email;
   user.fullName = USERToUpdate.name;
   user.isActive = USERToUpdate.active;
   user.role = USERToUpdate.userRole;
   user.phoneNumber = USERToUpdate.phone;
   const edited = await user.save()
-  if (USERToUpdate.isActive != 0) {
+  if (oldActive == 0) {
     messageRoutelet(USERToUpdate, originalUrl , null, 'activated');
   }
   return edited;

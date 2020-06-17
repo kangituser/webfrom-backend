@@ -5,9 +5,9 @@ const userMsgRouter = (data, route, state, pwd) => {
     return userWaiting(data) ; 
   } else if (route.includes('register') && state.includes('waiting')) {
     return userAccepted(data) && registerRequest(data);
-  } else if (route.includes('key') && !state) {
+  } else if (route.includes('key') && !state && route.includes('password') && pwd != null || pwd != undefined) {
     return userPwdUpdateRequest(data, pwd);
-  }  else if (route.includes('update') || route.includes('reset') && !state.includes('activated')) {
+  } else if (route.includes('reset') || route.includes('password/update')) {
     return pwdChanged(data);
   } else if (route.includes('update') && state.includes('activated')) {
     return userActivated(data);
