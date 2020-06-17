@@ -38,10 +38,10 @@ const Update = async ({ body, id, originalUrl }, res, next) => {
 const Generate = async ({ body, originalUrl}, res, next) => {
   const email = body.email;  
   const newToken = tokenGenerator();
-  const date = setTokenExpirationDate();
   let message;
-
+  
   try {
+    const date = await setTokenExpirationDate();
     const user = await findUserByEmail(email);       
     const token = await PWDTOKEN.findOne({ where: { userEmail: email }});
     
@@ -50,14 +50,14 @@ const Generate = async ({ body, originalUrl}, res, next) => {
       const hash = await bcrypt.hash(newToken, 12);
       const createdToken = await PWDTOKEN.create({
         token: hash,
-        expirtaionDate: date.toLocaleString('he-IL', {timezone: 'Asia/Jerusalem'}),
+        expirationDate: date.toLocaleString('he-IL', {timezone: 'Asia/Jerusalem'}),
         userEmail: email,
       });
       message = 'token generated successfully!';
       mail.messageRoutelet({ name: user.fullName, email: user.email, token }, originalUrl, newToken);
     } else {
       token.token = newToken;
-      token.expirtaionDate = date.toLocaleString('he-IL', {timezone: 'Asia/Jerusalem'});
+      token.expirationDate = date.toLocaleString('he-IL', {timezone: 'Asia/Jerusalem'});
       token.userEmail = email;
       await token.save();
       message = 'token generated successfully!';
@@ -97,7 +97,7 @@ const Reset = async ({ body, originalUrl }, res, next) => {
   }
 };
 
-const setTokenExpirationDate = () =>  new Date().setMinutes(new Date().getMinutes() + 30)
+const setTokenExpirationDate = async () =>  new Date().setMinutes(new Date().getMinutes() + 30)
 
 const tokenGenerator = () => new TokenGenerator(256, TokenGenerator.BASE62).generate();
 

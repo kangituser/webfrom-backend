@@ -7,7 +7,7 @@ const userMsgRouter = (data, route, state, pwd) => {
     return userAccepted(data) && registerRequest(data);
   } else if (route.includes('key') && !state) {
     return userPwdUpdateRequest(data, pwd);
-  }  else if (route.includes('update') || route.includes('reset')) {
+  }  else if (route.includes('update') || route.includes('reset') && !state.includes('activated')) {
     return pwdChanged(data);
   } else if (route.includes('update') && state.includes('activated')) {
     return userActivated(data);

@@ -35,5 +35,4 @@ sequelize
   .then(() => {
     app.listen(PORT, console.log(`started server on port ${PORT}`));
     console.log("synced to azure srdb");
-  })
-  .catch((err) => console.log(err));
+  }).catch((err) => console.log(err));
