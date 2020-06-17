@@ -69,11 +69,11 @@ const createASRequest = async ({ id, body, originalUrl }, res) => {
     idOpen: id
   }
   try {
-    const klhUsers = USER.findAll({ where: { role: 2 }, raw: true});
+    const klhUsers = await USER.findAll({ where: { role: 2 }, raw: true});
     let klhEmails = klhUsers.map((user) => {
       return user.email;
     });
-    klhEmails.unshift(authUser.email);
+    klhEmails.push
     const asr = await ASRcreation(ASRToCreate);        
     await createBlob(asr.id, body.blobName, body.containerName);
     await createState(asr.id);
