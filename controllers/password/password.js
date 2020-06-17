@@ -1,4 +1,4 @@
-const PWDTOKEN = require('../../models/pweToken');
+const PWDTOKEN = require('../../models/pwdToken');
 const { Op } = require('sequelize');
 
 const TokenGenerator = require('uuid-token-generator');
@@ -54,7 +54,7 @@ const Generate = async ({ body, originalUrl}, res, next) => {
         userEmail: email,
       });
       message = 'token generated successfully!';
-      mail.messageRoutelet({ name: user.fullName, email: user.email, token }, originalUrl, createdToken);
+      mail.messageRoutelet({ name: user.fullName, email: user.email, token }, originalUrl, newToken);
     } else {
       token.token = newToken;
       token.expirtaionDate = date.toLocaleString('he-IL', {timezone: 'Asia/Jerusalem'});
