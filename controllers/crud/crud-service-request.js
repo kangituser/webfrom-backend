@@ -12,7 +12,7 @@ const editASR = async (req, res, next) => {
   const body = req.body; 
   const id = req.id;
   const originalUrl = req.originalUrl;
-  const user = await USER.findOne({ where: { id: req.id }});  
+  const user = await USER.findOne({ where: { id: id }});  
   if (user.role === 1) {
     editASRequest(body, user, originalUrl, res);
   } else {

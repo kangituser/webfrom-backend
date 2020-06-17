@@ -99,9 +99,7 @@ const mergeBLOBwithASR = async (sr) => {
     }
   }
 
-  merged.sort((a,b) => {
-    return b.srId - a.srId
-  })
+  merged.sort((a,b) => b.srId - a.srId)
 
   return merged;
 }

@@ -7,6 +7,7 @@ const CATEGORIES = require('../../models/categories');
 const  { mainCatRouter } = require('./cat-router');
 const { findUserById } = require('../../shared/query-store');
 const mail = require('../../mail/massage-routelet');
+const USER = require('../../models/user');
 
 const ASRcreation = async asrToCreate => {
   const klh_module = await MODULE.findOne({ where: { moduleId: asrToCreate.klhModule }, attributes: ['moduleName']});
@@ -68,10 +69,16 @@ const createASRequest = async ({ id, body, originalUrl }, res) => {
     idOpen: id
   }
   try {
+    const klhUsers = USER.findAll({ where: { role: 2 }, raw: true});
+    let klhEmails = klhUsers.map((user) => {
+      return user.email;
+    });
+    klhEmails.unshift(authUser.email);
     const asr = await ASRcreation(ASRToCreate);        
     await createBlob(asr.id, body.blobName, body.containerName);
     await createState(asr.id);
-    mail.messageRoutelet({ srId: asr.id, email: authUser.email, main: asr.problem_type, sub: asr.problem_type, title: asr.title, description: asr.description, name: authUser.fullName, impact: asr.impact_name, klhModule: asr.module_klh_name }, originalUrl)
+    // mail.messageRoutelet({ srId: asr.id, email: authUser.email, main: asr.problem_type, sub: asr.problem_type, title: asr.title, description: asr.description, name: authUser.fullName, impact: asr.impact_name, klhModule: asr.module_klh_name }, originalUrl)
+    mail.messageRoutelet({ srId: asr.id, email: klhEmails, main: asr.problem_type, sub: asr.problem_type, title: asr.title, description: asr.description, name: authUser.fullName, impact: asr.impact_name, klhModule: asr.module_klh_name }, originalUrl)
     res.status(201).send({ message: 'success' });
   } catch (err) {
     res.status(500).send({ msg: err.message });

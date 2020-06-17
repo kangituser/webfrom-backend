@@ -10,7 +10,6 @@ const { findUserByEmail } = require('../../shared/query-store');
 
 const Login = async ({ body: { email, password }}, res, next) => {
   let status;
-  let obj;
   try {
     const user = await findUserByEmail(email);
     const [tokenData] = await TOKEN.findAll({ where: { userEmail: email }, raw: true });
@@ -18,18 +17,18 @@ const Login = async ({ body: { email, password }}, res, next) => {
     if (user && user.isActive === true) {
       // check if user exists and is active
       if (await bcrypt.compare(password, user.password)) {
-        status = 201;
-        obj = { auth: true, token: loginJWTToken(user.id), expirationDate: tokenData.expirationDate , role: user.role };
+         status = 201;
+        // obj = { auth: true, token: loginJWTToken(user.id), expirationDate: tokenData.expirationDate , role: user.role };
          res.status(201).send({ auth: true, token: loginJWTToken(user.id), expirationDate: tokenData.expirationDate , role: user.role }); // send token to front
       } else {
         status = 401;
-        obj = { auth: false, token: null, message: 'incorrect password'};
+        // obj = { auth: false, token: null, message: 'incorrect password'};
         res.status(401).send({ auth: false, token: null, message: 'incorrect password'});
       }
     } else {
       // what to do if user does not exist or not active
       status = 404;
-      obj = { message: 'user not active or does not exist' };
+      // obj = { message: 'user not active or does not exist' };
       res.status(404).send({ message: 'user not active or does not exist' });
     }
     

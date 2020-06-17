@@ -1,4 +1,4 @@
-const TOKEN = require('../../models/token');
+const PWDTOKEN = require('../../models/pweToken');
 const { Op } = require('sequelize');
 
 const TokenGenerator = require('uuid-token-generator');
@@ -43,25 +43,26 @@ const Generate = async ({ body, originalUrl}, res, next) => {
 
   try {
     const user = await findUserByEmail(email);       
-    const token = await TOKEN.findOne({ where: { userEmail: email }});
+    const token = await PWDTOKEN.findOne({ where: { userEmail: email }});
     
     if (!token) {
       // if email does not exist
       const hash = await bcrypt.hash(newToken, 12);
-      const createdToken = await TOKEN.create({
+      const createdToken = await PWDTOKEN.create({
         token: hash,
         expirtaionDate: date.toLocaleString('he-IL', {timezone: 'Asia/Jerusalem'}),
         userEmail: email,
       });
       message = 'token generated successfully!';
+      mail.messageRoutelet({ name: user.fullName, email: user.email, token }, originalUrl, createdToken);
     } else {
       token.token = newToken;
       token.expirtaionDate = date.toLocaleString('he-IL', {timezone: 'Asia/Jerusalem'});
       token.userEmail = email;
       await token.save();
       message = 'token generated successfully!';
+      mail.messageRoutelet({ name: user.fullName, email: user.email, token }, originalUrl, newToken);
     }
-    mail.messageRoutelet({ name: user.fullName, email: user.email, token }, originalUrl, newToken);
     res.status(201).send({ message: message })
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -74,7 +75,7 @@ const Reset = async ({ body, originalUrl }, res, next) => {
   const token = body.token;
   const route = originalUrl;
   try {
-    const tokenData = await TOKEN.findOne({ where:  { userEmail: email, expirationDate: { [Op.gt]: new Date() } }});
+    const tokenData = await PWDTOKEN.findOne({ where: { userEmail: email, expirationDate: { [Op.gt]: new Date() } }});
     if (tokenData) {
       if (tokenData.token === token) {
         const hash = await bcrypt.hash(pwd, 12);

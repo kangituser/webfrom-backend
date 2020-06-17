@@ -1,13 +1,14 @@
-const dispenser = require('./massage-dispenser');
+const { serviceRequestMsgRouter } = require('./sr-message-dispenser');
+const { userMsgRouter } = require('./user-message-dispenser');
 const axios = require('axios');
   
 const messageRoutelet = (data, route, pwd, state) => {  
   let email;
   
   if (route.includes('service-request')) {
-    email = dispenser.serviceRequestMsgRouter(data, route, pwd);
+    email = serviceRequestMsgRouter(data, route, pwd);
   } else if (route.includes('user')) {
-    email = dispenser.userMsgRouter(data, route, state, pwd);
+    email = userMsgRouter(data, route, state, pwd);
   }
   //  console.log(email);
    
