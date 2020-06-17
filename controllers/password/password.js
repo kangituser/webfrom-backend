@@ -50,14 +50,14 @@ const Generate = async ({ body, originalUrl}, res, next) => {
       const hash = await bcrypt.hash(newToken, 12);
       const createdToken = await PWDTOKEN.create({
         token: hash,
-        expirationDate: date.toLocaleString('he-IL', {timezone: 'Asia/Jerusalem'}),
+        expirationDate: date,
         userEmail: email,
       });
       message = 'token generated successfully!';
       mail.messageRoutelet({ name: user.fullName, email: user.email, token }, originalUrl, newToken);
     } else {
       token.token = newToken;
-      token.expirationDate = date.toLocaleString('he-IL', {timezone: 'Asia/Jerusalem'});
+      token.expirationDate = date;
       token.userEmail = email;
       await token.save();
       message = 'token generated successfully!';
