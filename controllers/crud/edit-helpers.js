@@ -60,6 +60,7 @@ const updateASR = async (res, body) => {
   asr.blobName = body.blobName;    
   asr.closeStatusId = close_status.statusId;
   asr.closeStatusName = close_status.statusName;
+  asr.root_problem = body.root_problem;  
 
   await asr.save();
   return asr;
