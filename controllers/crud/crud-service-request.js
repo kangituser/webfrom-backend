@@ -13,7 +13,7 @@ const editASR = async (req, res, next) => {
   const id = req.id;
   const originalUrl = req.originalUrl;
   const user = await USER.findOne({ where: { id: id }});  
-  if (user.role === 1) {
+  if (user.role === 1 || user.role === 2) {
     editASRequest(body, user, originalUrl, res);
   } else {
     res.status(422).json({ message: 'unauthorized user '});    
