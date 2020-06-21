@@ -80,7 +80,7 @@ const remapData = async (data) => {
       solution: el.solution,
       root_problem: el.root_problem,
       closedStatus: el.closeStatusName,
-      dateToIssue: el.dateToIssue    
+      dateToIssue: el.dateToIssue.toLocaleDateString('he-IL')    
     })
   });  
   return formattedData;
