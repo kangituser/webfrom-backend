@@ -55,7 +55,7 @@ const updateASR = async (res, body) => {
   asr.status_name = status.statusName;
   asr.update_time = new Date();
   asr.solution = body.solution;    
-  asr.dateToIssue = body.dateToIssue;    
+  asr.dateToIssue = body.dateToIssue ? body.dateToIssue : asr.dateToIssue;    
   asr.containerName = body.containerName;    
   asr.blobName = body.blobName;    
   asr.closeStatusId = close_status.statusId;
