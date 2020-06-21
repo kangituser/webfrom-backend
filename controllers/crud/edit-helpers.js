@@ -1,14 +1,14 @@
 const STATE = require('../../models/state');
 const LOG = require('../../models/Change_log');
-const mail = require('../../mail/massage-routelet');
 const STATUS = require('../../models/status');
 const MODULE = require('../../models/klhmodules');
 const IMPACT = require('../../models/impact');
 const CATEGORIES = require('../../models/categories');
-const { mainCatRouter } = require('./cat-router');
 const ASR = require('../../models/ASR');
 const CLOSE_STATUS = require('../../models/close-status');
+const { mainCatRouter } = require('./cat-router');
 const { findState, findASRById } = require("../../shared/query-store");
+const mail = require('../../mail/massage-routelet');
 
 const createEditState = async srId => {
   await STATE.create({
@@ -51,15 +51,15 @@ const updateASR = async (res, body) => {
   asr.impact_name = impact.affectionName;
   asr.sr_cust_module = body.klhModule;
   asr.module_klh_name = klh_module.moduleName;
-  asr.status = body.status;
+  asr.status = status.statusId;
   asr.status_name = status.statusName;
   asr.update_time = new Date();
   asr.solution = body.solution;    
-  asr.dateToIssue = body.dateToIssue;    
+  asr.dateToIssue = new Date(body.dateToIssue);    
   asr.containerName = body.containerName;    
   asr.blobName = body.blobName;    
-  //asr.closeStatusId = close_status.statusId;
-  //asr.closeStatusName = close_status.statusName;
+  asr.closeStatusId = close_status.statusId;
+  asr.closeStatusName = close_status.statusName;
   asr.root_problem = body.root_problem;  
 
   await asr.save();
