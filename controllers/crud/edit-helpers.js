@@ -41,7 +41,7 @@ const updateASR = async (res, body) => {
   const main = await CATEGORIES.findOne({ where: { catId: body.mainCategory }});  
   const sub = await mainCatRouter(main.catId, body.subCategory);  
   const asr = await ASR.findOne({ where: { id: body.srId}});
-  const close_status = await CLOSE_STATUS.findOne({ where: { statusId: body.closedStatus }})
+  const close_status = await CLOSE_STATUS.findOne({ where: { id: body.closedStatus }})
     
   asr.title = body.title;
   asr.problem_type = main.catName;
@@ -55,7 +55,7 @@ const updateASR = async (res, body) => {
   asr.status_name = status.statusName;
   asr.update_time = new Date();
   asr.solution = body.solution;    
-  asr.dateToIssue = new Date(body.dateToIssue);    
+  asr.dateToIssue = body.dateToIssue;    
   asr.containerName = body.containerName;    
   asr.blobName = body.blobName;    
   asr.closeStatusId = close_status.statusId;
