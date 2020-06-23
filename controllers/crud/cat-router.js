@@ -3,20 +3,22 @@ const MAL_CAT = require('../../models/malfunction_categories');
 
 const mainCatRouter = async (main, cat) => {
     let response, name;
-    if (main === 3) {
-      name = await srMapper(cat);
-      response = name.catName;
-    } else if (main === 4) {
-      name = await mlMapper(cat);
-      response = name.catName;
-    } else {
-      response = ' ';
-    }
-    return response;
+    switch (main) {
+      case 3:
+        name = await mapper(cat, SR_CAT);
+        response = name.catName;
+        break;
+      case 4:
+        name = await mapper(cat, MAL_CAT);
+        response = name.catName;
+        break;
+      default:
+        response = ' ';
+        break;
+      }
+      return response;
   }
   
-  const srMapper = async cat => await SR_CAT.findOne({ where: { catId: cat }, attributes: ['catName']});
-  
-  const mlMapper = async cat => await MAL_CAT.findOne({ where: { catId: cat }, attributes: ['catName']}); 
+  const mapper = async (cat, model) => await model.findOne({ where: { catId: cat }, attributes: ['catName']});
 
   module.exports = { mainCatRouter };

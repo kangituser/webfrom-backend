@@ -1,21 +1,22 @@
 if (process.env.NODE_ENV == "development") {
-  require("dotenv").config();
 }
+require("dotenv").config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const PORT = process.env.PORT || 8080;
 
 const { sequelize } = require("./util/database");
 
-const userRoutes = require("./routes/user");
-const serviceRequestRoutes = require("./routes/service-request");
+const UserRoutes = require("./routes/user");
+const SRRoutes = require("./routes/service-request");
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use("/user", userRoutes);
-app.use("/service-request", serviceRequestRoutes);
+app.use("/user", UserRoutes);
+app.use("/service-request", SRRoutes);
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -27,12 +28,8 @@ app.use((req, res, next) => {
   next();
 });
 
-const PORT = process.env.PORT || 8080;
-// sequelize.sync({ force: true })
-// sequelize.sync({ alter: true })
-sequelize
-  .sync({ alter: false })
-  .then(() => {
+sequelize.sync({ alter: false })
+.then(() => {
     app.listen(PORT, console.log(`started server on port ${PORT}`));
     console.log("synced to azure srdb");
-  }).catch((err) => console.log(err));
+}).catch((err) => console.log(err));
