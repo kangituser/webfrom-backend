@@ -11,7 +11,7 @@ const findAllOpenASRs = async status => await ASR.findAll({ where: { status: sta
 
 const findAllOpenASRsByEmail = async (status, email) => ASR.findAll({ where: { email_open: { [Op.eq]: email }, status: status, }, raw: true, order: [["id", "DESC"]] });
 
-const findAllClosedASRs = async () => await ASR.findAll({ where: { status: { [Op.eq]: 3, }, }, raw: true, order: [["id", "DESC"]] });
+const findAllClosedASRs = async () => await ASR.findAll({ where: { status: { [Op.eq]: 3, } }, raw: true, order: [["id", "DESC"]] });
 
 const findAllClosedASRsByEmail = async email => ASR.findAll({ where: { email_open: { [Op.eq]: email }, status: status, }, raw: true, order: [["id", "DESC"]] });
 
@@ -29,6 +29,8 @@ const findStatusById = async id => await STATUS.findOne({ where: { statusId: id 
 
 const findCloseStatus = async id => await CLOSE_STATUS.findOne({ where: { statusId: id }});
 
+const findAllClosedStatuses = async () => await CLOSE_STATUS.findAll({ where: { status: { [Op.eq]: 3 }, raw: true }});
+
 const findStateById = async srId => await STATE.findOne({ where: { srId: srId } });
 
 module.exports = { 
@@ -44,4 +46,5 @@ module.exports = {
     findKLHModuleById,
     findCloseStatus,
     findStateById,
+    findAllClosedStatuses
 };

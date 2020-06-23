@@ -17,7 +17,8 @@ const remapData = async data => {
         solution: el.solution,
         root_problem: el.root_problem,
         closedStatus: el.closeStatusName,
-        dateToIssue: new Date(el.dateToIssue).toLocaleDateString('he-IL',{ timezone: "Asia/Jerusalem" })    
+        dateToIssue: new Date(el.dateToIssue).toLocaleDateString('he-IL',{ timezone: "Asia/Jerusalem" }),   
+        close_time: new Date(el.close_time).toLocaleDateString('he-IL',{ timezone: "Asia/Jerusalem" }) 
       })
     });  
     return formattedData;
