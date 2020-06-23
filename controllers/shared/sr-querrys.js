@@ -5,6 +5,7 @@ const CATEGORIES = require('../../models/categories');
 const STATUS = require('../../models/status');
 const CLOSE_STATUS = require('../../models/close-status');
 const STATE = require('../../models/state');
+const LOG = require('../../models/Change_log');
 const { Op } = require("sequelize");
 
 const findAllOpenASRs = async status => await ASR.findAll({ where: { status: status }, raw: true, order: [["id", "DESC"]], });
@@ -29,7 +30,7 @@ const findStatusById = async id => await STATUS.findOne({ where: { statusId: id 
 
 const findCloseStatus = async id => await CLOSE_STATUS.findOne({ where: { statusId: id }});
 
-const findAllClosedStatuses = async () => await CLOSE_STATUS.findAll({ where: { status: { [Op.eq]: 3 }, raw: true }});
+const findAllClosedStatuses = async () => await LOG.findAll({ where: { new_value: { [Op.eq]: 3 } } , raw: true });
 
 const findStateById = async srId => await STATE.findOne({ where: { srId: srId } });
 

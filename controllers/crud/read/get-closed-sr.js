@@ -1,9 +1,10 @@
-const findAllClosedASR = async (userId, res) => {
+const findAllClosedASR = async (req, res) => {
     const { findAllClosedASRs, findAllClosedASRsByEmail } = require('../../shared/sr-querrys');
     const { findUserById } = require('../../shared/user-querrys');
     const { responseHandler } = require('../../shared/response-handler');
     const { remapData } = require('./map-data');
     const { mergeBLOBwithASR } = require('./mergeWithBlob');
+    const { id: userId } = req;
     let asr;
     try {    
       const authUser = await findUserById(userId);    
