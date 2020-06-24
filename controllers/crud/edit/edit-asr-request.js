@@ -9,8 +9,7 @@ const editASRequest = async (body, user, originalUrl, res) => {
     const { sendASRDeitedMail } = require('./send-email');
     const { findStateById } = require('../../shared/sr-querrys');
     const states = [0, 1, 2, 3];
-    const { srId, affection } = body;
-    
+    const { srId, affection } = body; 
     try {
       const state = await findStateById(srId);        
       if (!state) {      
@@ -18,8 +17,8 @@ const editASRequest = async (body, user, originalUrl, res) => {
         responseHandler(res, 201, { message: 'created a new state' });
        } else {
          if (states.includes(state.syncStatus)) { 
-           const updatedASR = await findASRById(srId);                 
-            const editedASR = await updateASR(body);                     
+           const updatedASR = await findASRById(srId);                            
+           const editedASR = await updateASR(body);                     
             if (updatedASR.impact !== affection) { 
              await LOG.create({ old_value: updatedASR.impact, new_value: affection, date_edited: new Date(), edited_by: user.fullName, srId: srId })           
             }

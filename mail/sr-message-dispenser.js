@@ -84,7 +84,7 @@ const serviceRequestClosed = data => {
   <div style="direction: rtl;">
   <p>שלום,</p>
   
-  <p>קריאה שמספרה ${data.srId} נסגרה בסטאטוס ${data.closeStatusName}</p>
+  <p>קריאה שמספרה ${data.srId} נסגרה בסטאטוס '${data.status}'</p>
   <p>פרטי הקריאה:</p>
 
   <p>כותרת: ${data.title}</p>

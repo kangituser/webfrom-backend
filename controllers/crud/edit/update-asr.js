@@ -1,6 +1,4 @@
-const { mainCatRouter } = require('../cat-router');
-
-const updateASR = async body => {
+const updateASR = async body => {  
   const { 
     status, 
     affection, 
@@ -20,7 +18,7 @@ const updateASR = async body => {
   const { findStatusById, findImpact, findKLHModuleById, findCategories, findASRById, findCloseStatus } = require('../../shared/sr-querrys');
   const { mainCatRouter } = require('../cat-router')
   try {
-    const statusData = await findStatusById(status);
+    const statusData = await findStatusById(status);    
     const impact = await findImpact(affection);
     const klh_moduleData = await findKLHModuleById(klhModule);
     const main = await findCategories(mainCategory)
@@ -46,6 +44,8 @@ const updateASR = async body => {
     asr.closeStatusId = close_status.statusId || asr.closeStatusId;
     asr.closeStatusName = close_status.statusName || asr.closeStatusName;
     asr.root_problem = root_problem || asr.root_problem;
+    asr.close_time = new Date();
+    
     await asr.save();
     return asr;
   } catch (err) {

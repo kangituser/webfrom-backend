@@ -1,22 +1,18 @@
 const sendASRDeitedMail = async (updatedASR, authUser, ASRtoUpdate, isChanged, route, processed, closed) => {
   const { messageRoutelet } = require('../../../mail/massage-routelet');
-  const { findKLHModuleById, findStatusById, findImpact } = require('../../shared/sr-querrys');
-  const { klhModule, status, affection, id, problem_type, problem_sub_type, title, description, closeStatusName } = ASRtoUpdate;
-  const klh_module = await findKLHModuleById(klhModule)
-  const statusData = await findStatusById(status);
-  const impact = await findImpact(affection);
-    
+  const { id, problem_type, problem_sub_type, module_klh_name, title, description, impact_name, status_name  } = updatedASR;
+  const { closeStatusName } = ASRtoUpdate;    
     messageRoutelet({
-      srId: updatedASR ? id: null,
-      category: updatedASR ? problem_type: null,
-      subCategory: updatedASR ? problem_sub_type: null,
-      status: statusData.statusName,
-      module: klh_module.moduleName,
+      srId: id,
+      category: problem_type,
+      subCategory: problem_sub_type,
+      status: status_name,
+      module: module_klh_name,
       title: title,
       description: description,
       email: authUser.email,
       name: authUser.fullName,
-      impact: impact.affectionName,
+      impact: impact_name,
       isChanged: isChanged,
       updated: processed,
       closed: closed,
