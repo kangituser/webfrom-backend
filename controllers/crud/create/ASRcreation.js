@@ -6,7 +6,7 @@ const ASRcreation = async asrToCreate => {
   
   const { klhModule, impact, problemType, problemSubType, title, name, idOpen, email, phone, description } = asrToCreate;
   const klh_module = await findKLHModule(klhModule);
-  const impact = await findImpact(impact);
+  const impactData = await findImpact(impact);
   const main = await findCategories(problemType);  
   const sub = await mainCatRouter(main.catId, problemSubType);
   
@@ -20,7 +20,7 @@ const ASRcreation = async asrToCreate => {
     phone_open: phone,
     description: description,
     impact: impact,
-    impact_name: impact.affectionName,
+    impact_name: impactData.affectionName,
     sr_cust_module: klhModule,
     module_klh_name: klh_module.moduleName,
     status: 1,

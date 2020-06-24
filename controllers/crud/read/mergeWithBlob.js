@@ -3,8 +3,8 @@ const mergeBLOBwithASR = async sr => {
   const { findAllClosedStatuses } = require('../../shared/sr-querrys');
   let merged = [];
   const blob = await findAllBlobs();
-  const statuses = await findAllClosedStatuses();   
-
+  const statuses = await findAllClosedStatuses(); 
+  
   for (let i = 0; i < blob.length; i++) {
     for (let j = 0; j < sr.length; j++) {
       if (blob[i].srId === sr[j].srId) {

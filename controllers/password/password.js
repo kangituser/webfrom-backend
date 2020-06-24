@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const mail = require('../../mail/massage-routelet');
 const { findUserByEmail, findUserById, findSingleUserByEmail } = require('../../shared/query-store');
 
-const Update = async ({ body, id, originalUrl }, res, next) => { 
+const Update = async ({ body, id, originalUrl }, res) => { 
   let message;
   let status;  
   try {

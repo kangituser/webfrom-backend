@@ -1,19 +1,15 @@
 # **Mvc Service Requests**
 
-## **Upon Installation**
+> Description
 
 ```
-whilst installing node_modules you need to change a folder in the sequelize lib :
+  A CRM System, including:
 
-node_modules/sequelize/lib/data-types.js => 
-```
+  (1) Automatic Email Notification Service 
+  (2) SQL Server CRUD API
+  (3) Security Layer
+  (4) Role management
+  (5) Password recovery system
+  (6) Change log
 
-```javascript
-DATE.prototype._stringify = function _stringify(date, options) {
-  date = this._applyTimezone(date, options);
-
-  // Z here means current timezone, _not_ UTC
-  // return date.format('YYYY-MM-DD HH:mm:ss.SSS Z');
-  return date.format('YYYY-MM-DD HH:mm:ss.SSS');
-};
 ```

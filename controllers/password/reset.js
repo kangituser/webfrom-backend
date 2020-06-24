@@ -3,10 +3,11 @@ const Reset = async (req, res) => {
     const { responseHandler } = require('../shared/response-handler');
     const { findSingleUserByEmail } = require('../shared/user-querrys');
     const { hashPassword } = require('../shared/pwd-querrys')
+    const { findUnexpiredTokenByEmail } = require('../shared/pwd-token-querrys');
     const { email, password: pwd, token } = req.body;
     const { originalUrl: route } = req.originalUrl;
     try {
-      const tokenData = await PWDTOKEN.findOne({ where: { userEmail: email, expirationDate: { [Op.gt]: new Date() } }});
+      const tokenData = await findUnexpiredTokenByEmail(email);
       if (tokenData) {
         if (tokenData.token === token) {
           const hash = await hashPassword(pwd);
