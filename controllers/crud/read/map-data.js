@@ -5,9 +5,8 @@ const remapData = async data => {
     data.forEach(el => {
       formattedData.push({
         srId: el.id,
-        // requestTime: `${el.insert_time.toISOString().split('T')[0]} ${el.insert_time.toISOString().split('T')[1].slice(0,8)}`,
         requestTime: formatDate(el.insert_time),
-        name: el.name_open,
+         name: el.name_open,
         phoneNumber: el.phone_open,
         emailAddress: el.email_open,
         mainCategory: el.problem_type,
