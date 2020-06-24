@@ -1,5 +1,6 @@
 const actualDeletion = async srId => {
-  const { findASRById, findBlobById } = require('../../shared/user-querrys');
+  const { findASRById } = require('../../shared/sr-querrys');
+  const { findBlobById } = require('../../shared/blob-querrys');
   try {
     const asr = await findASRById(srId);
     const image = await findBlobById(asr.id);

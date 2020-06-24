@@ -2,4 +2,6 @@ const BLOB = require('../../models/Blob');
  
 const findAllBlobs = async () => await BLOB.findAll({ raw: true });
 
-module.exports = { findAllBlobs };
+const findBlobById = async srId => await BLOB.findOne({ where: { srId: srId }});
+
+module.exports = { findAllBlobs, findBlobById };
