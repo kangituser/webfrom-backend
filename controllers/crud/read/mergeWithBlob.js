@@ -25,9 +25,7 @@ const mergeBLOBwithASR = async sr => {
           merged[j].closed_by = statuses[i].edited_by;
         }
       }
-    }
-    console.log(merged);
-    
+    }    
   return merged;
 };
 
