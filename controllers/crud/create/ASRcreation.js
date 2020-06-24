@@ -24,6 +24,7 @@ const ASRcreation = async asrToCreate => {
     sr_cust_module: klhModule,
     module_klh_name: klh_module.moduleName,
     status: 1,
+    insert_time: new Date(),
     status_name: 'חדש',
     update_time: new Date(),
     dateToIssue: new Date().setHours(new Date().getHours() + 4) 

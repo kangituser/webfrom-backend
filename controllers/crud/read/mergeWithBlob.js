@@ -26,6 +26,8 @@ const mergeBLOBwithASR = async sr => {
         }
       }
     }
+    console.log(merged);
+    
   return merged;
 };
 
