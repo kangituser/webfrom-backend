@@ -5,7 +5,7 @@ const editASR = async (req, res) => {
   const { id, originalUrl } = req;
   
   const user = await findUserById(id);
-  if (user.role == 1 || user.role == 2) {
+  if (user.role == 1 || user.role == 2 || user.role == -1) {
     editASRequest(req.body, user, originalUrl, res);
   } else {
     responseHandler(res, 422, { message: "unauthorized user " })

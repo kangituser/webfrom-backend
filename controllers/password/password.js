@@ -12,7 +12,7 @@ const Update = async ({ body, id, originalUrl }, res) => {
   try {
     const authUser = await findUserById(id);
     const hash = await bcrypt.hash(body.password, 12);
-    if (authUser.role === 1) {
+    if (authUser.role === 1 || authUser.role === -1) {
       const user = await findUserById(body.id); // find user to update password
       
       if (user) {

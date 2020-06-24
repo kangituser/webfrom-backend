@@ -9,7 +9,7 @@ const findAllOpenASR = async (req, res) => {
     const status = [1,2,4,5,6];
     try {    
       const authUser = await findUserById(id);    
-      if (authUser.role === 1 || authUser.role === 2) {
+      if (authUser.role === 1 || authUser.role === 2 || authUser.role === -1) {
         asr = await findAllOpenASRs(status);     
       } else {
         asr = await findAllOpenASRsByEmail(status, authUser.email);     

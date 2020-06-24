@@ -17,7 +17,7 @@ const Update = async (req, res) => {
   
     try {
       const loggedIn = await findUserById(id);
-      if (loggedIn.role === 1) {
+      if (loggedIn.role === 1 || loggedIn.role === -1) {
         const user = await findUserById(userId);
         if (user) {
           await EditUser(user, USERToUpdate, originalUrl);        

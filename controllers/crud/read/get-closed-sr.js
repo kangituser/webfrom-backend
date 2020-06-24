@@ -8,7 +8,7 @@ const findAllClosedASR = async (req, res) => {
     let asr;
     try {    
       const authUser = await findUserById(userId);    
-      if (authUser.role === 1 || authUser.role === 2) {
+      if (authUser.role === 1 || authUser.role === 2 || authUser.role === -1) {
         asr = await findAllClosedASRs();     
       } else {
         asr = await findAllClosedASRsByEmail(authUser.email);     

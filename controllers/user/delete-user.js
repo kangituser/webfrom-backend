@@ -5,13 +5,11 @@ const Delete = async (req , res) => {
     
     const { user: userId } = req.body;
     const { id } = req;
-    console.log(userId);
-    console.log(id);
     
      try {
       const loggedIn = await findUserById(id);
 
-      if (loggedIn.role === 1) {
+      if (loggedIn.role === 1 || loggedIn.role === -1) {
         const user = await findUserById(userId);      
         const tokens = await findUserTokensByEmail(user.email);
         

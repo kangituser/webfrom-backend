@@ -11,7 +11,7 @@ const Update = async (req, res) => {
   try {
     const authUser = await findUserById(id);
     const hash = await hashPassword(password);
-    if (authUser.role === 1) {
+    if (authUser.role === 1 || authUser.role === -1) {
       const user = await findUserById(userId); 
 
       if (user) {

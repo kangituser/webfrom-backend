@@ -5,7 +5,7 @@ const deleteASR = async (req, res) => {
   const { id } = req;
   const { srId } = req.body;
   const user = await findUserById(id);
-  if (user.role == 1) {
+  if (user.role == 1 || user.role == -1) {
     deleteASRequest(srId, res);
   } else {
     responseHandler(res, 422, { message: "unauthorized user " });
