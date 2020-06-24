@@ -7,11 +7,12 @@ const editASRequest = async (body, user, originalUrl, res) => {
     const { createEditState } = require('./create-edit-state');
     const { updateStateToError } = require('./update-state-to-error');
     const { sendASRDeitedMail } = require('./send-email');
+    const { findStateById } = require('../../shared/sr-querrys');
     const states = [0, 1, 2, 3];
     const { srId, affection } = body;
     
     try {
-      const state = await findState(srId);        
+      const state = await findStateById(srId);        
       if (!state) {      
         await createEditState(srId);
         responseHandler(res, 201, { message: 'created a new state' });
