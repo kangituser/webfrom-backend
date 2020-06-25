@@ -3,7 +3,7 @@ const Delete = async (req , res) => {
     const { findUserTokensByEmail } = require('../shared/token-querrys');
     const { findUserById } = require('../shared/user-querrys');
     
-    const { user: userId } = req.body;
+    const { userId } = req.body;
     const { id } = req;
     
      try {
