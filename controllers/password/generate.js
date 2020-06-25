@@ -6,18 +6,18 @@ const Generate = async (req, res) => {
     const { findPWDTokenByEmail, createPWDToken } = require('../shared/pwd-token-querrys');
     const { hashPassword } = require('../shared/pwd-querrys');
     const { tokenGenerator } = require('../shared/token-generator');
-    const newToken = tokenGenerator();
+    const newToken = await tokenGenerator();
     const { email } = req.body;  
-    const { originalUrl } = req;
+    const { originalUrl } = req;       
     
     try {
-      const date = await setTokenExpirationDate();
-      const user = await findUserByEmail(email);       
-      const token = await findPWDTokenByEmail(email);
+      const date = await setTokenExpirationDate();      
+      const user = await findUserByEmail(email);                 
+      const token = await findPWDTokenByEmail(email);      
       
       if (!token) {
         // if email does not exist
-        const hash = await hashPassword(newToken);
+        const hash = await hashPassword(newToken);        
         const createdToken = await createPWDToken(hash, date, email)
         messageRoutelet({ name: user.fullName, email: user.email, token }, originalUrl, newToken);
       } else {
@@ -30,7 +30,7 @@ const Generate = async (req, res) => {
       }
       responseHandler(res, 201, { message: 'token generated successfully!' })
     } catch (err) {
-      responseHandler(res, status, { message: err.message })
+      responseHandler(res, 500, { message: err.message })
     }
   };
 

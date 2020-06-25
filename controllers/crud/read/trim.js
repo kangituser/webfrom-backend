@@ -1,5 +1,3 @@
-const whiteSpaces = str => {
-    return str === " " ? null : str;
-}
+const whiteSpaces = str => str === " " ? null : str;
 
 module.exports = { whiteSpaces };

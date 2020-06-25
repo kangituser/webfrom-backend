@@ -1,13 +1,14 @@
+
 const ASRcreation = async asrToCreate => {
+  const ASR = require('../../../models/ASR');
   
   const { findKLHModule, findImpact, findCategories } = require('../../shared/sr-querrys');
   const { mainCatRouter } = require('../cat-router');
-  const ASR = require('../../../models/ASR');
   
   const { klhModule, impact, problemType, problemSubType, title, name, idOpen, email, phone, description } = asrToCreate;
   const klh_module = await findKLHModule(klhModule);
-  const impactData = await findImpact(impact);
-  const main = await findCategories(problemType);  
+  const impactData = await findImpact(impact);  
+  const main = await findCategories(problemType);    
   const sub = await mainCatRouter(main.catId, problemSubType);
   
   return await ASR.create({

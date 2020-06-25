@@ -1,6 +1,22 @@
 if (process.env.NODE_ENV == "development") {
+  require("dotenv").config();
 }
-require("dotenv").config();
+
+// const ASR = require('./models/ASR');
+// const BLOB = require('./models/Blob');
+// const BLOB_SERVERS = require('./models/Blob_Servers');
+// const LOG = require('./models/Change_log');
+// const CATEGORIES = require('./models/categories');
+// const CLOSE_STATUS = require('./models/close-status');
+// const IMPACT = require('./models/impact');
+// const KLH_MODULES = require('./models/klhmodules');
+// const ML_CAT = require('./models/malfunction_categories');
+// const PWD_TOKENS = require('./models/pwdToken');
+// const SR_CAT = require('./models/sr_categories');
+// const STATE = require('./models/state');
+// const STATUS = require('./models/status');
+// const TOKEN = require('./models/token');
+// const USER = require('./models/user');
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -29,6 +45,7 @@ app.use((req, res, next) => {
 });
 
 sequelize.sync({ alter: false })
+// sequelize.sync({ force: true })
 .then(() => {
     app.listen(PORT, console.log(`started server on port ${PORT}`));
     console.log("synced to azure srdb");

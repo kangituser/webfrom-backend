@@ -9,23 +9,26 @@ const editASRequest = async (body, user, originalUrl, res) => {
     const { sendASRDeitedMail } = require('./send-email');
     const { findStateById } = require('../../shared/sr-querrys');
     const states = [0, 1, 2, 3];
-    const { srId, affection } = body; 
+    const { srId, affection, status } = body; 
     try {
-      const state = await findStateById(srId);        
+      const state = await findStateById(srId);
+               
       if (!state) {      
         await createEditState(srId);
         responseHandler(res, 201, { message: 'created a new state' });
        } else {
          if (states.includes(state.syncStatus)) { 
            const updatedASR = await findASRById(srId);                            
-           const editedASR = await updateASR(body);                     
+           const editedASR = await updateASR(body);            
+            
+            
             if (updatedASR.impact !== affection) { 
              await LOG.create({ old_value: updatedASR.impact, new_value: affection, date_edited: new Date(), edited_by: user.fullName, srId: srId })           
             }
             await updateStateToEdit(state)           
-            if (editedASR.status === 2) {
+            if (status === 2) {
               sendASRDeitedMail(editedASR, user, body, true, originalUrl, true, false);
-            } else if (editedASR.status === 3) {            
+            } else if (status === 3) {            
               sendASRDeitedMail(editedASR, user, body, true, originalUrl, false, true);
             } else {
               sendASRDeitedMail(editedASR, user, body, true, originalUrl, false, false);
@@ -39,7 +42,7 @@ const editASRequest = async (body, user, originalUrl, res) => {
         }
       }    
     } catch (err) {
-      responseHandler(res, 500, { message: err.message});
+      responseHandler(res, 500, { message: err.message });
     }
   }
 
