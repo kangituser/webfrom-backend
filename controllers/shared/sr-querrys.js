@@ -14,7 +14,7 @@ const findAllOpenASRsByEmail = async (status, email) => ASR.findAll({ where: { e
 
 const findAllClosedASRs = async () => await ASR.findAll({ where: { status: { [Op.eq]: 3, } }, raw: true, order: [["id", "DESC"]] });
 
-const findAllClosedASRsByEmail = async email => ASR.findAll({ where: { email_open: { [Op.eq]: email }, status: status, }, raw: true, order: [["id", "DESC"]] });
+const findAllClosedASRsByEmail = async email => ASR.findAll({ where: { email_open: { [Op.eq]: email }, status: 3, }, raw: true, order: [["id", "DESC"]] });
 
 const findASRById = async id => await ASR.findOne({ where: { id: id } }); 
 
