@@ -36,7 +36,7 @@ const mergeBLOBwithASR = async sr => {
       mainCategory: sr.problem_type,
       name: sr.name_open,
       phoneNumber: sr.phone_open,
-      requestTime: formatDate(sr.dateToIssue),
+      requestTime: formatDate(sr.insert_time),
       root_problem: sr.root_problem,
       solution: sr.solution,
       srId: sr.id,
