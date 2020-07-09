@@ -1,4 +1,5 @@
 const mergeBLOBwithASR = async sr => {
+  const { formatDate } = require('./format-dates')
   const { findAllClosedStatuses } = require('../../shared/sr-querrys');
   const uniqueSRIDsFROMs = require('./uniqueStatusSrIds')
   const srSRIDS = uniqueSRIDsFROMs(sr);
@@ -25,17 +26,17 @@ const mergeBLOBwithASR = async sr => {
     mapped.push({
       affection: sr.impact_name,
       blobName: sr['mvcBLOBs.blobName'],
-      close_time: sr.close_time,
+      close_time: formatDate(sr.close_time),
       closedStatus: sr.closeStatusName,
       containerName: sr['mvcBLOBs.containerName'],
-      dateToIssue: sr.dateToIssue,
+      dateToIssue: formatDate(sr.dateToIssue),
       description: sr.description,
       emailAddress: sr.email_open,
       klhModule: sr.module_klh_name,
       mainCategory: sr.problem_type,
       name: sr.name_open,
       phoneNumber: sr.phone_open,
-      requestTime: sr.dateToIssue,
+      requestTime: formatDate(sr.dateToIssue),
       root_problem: sr.root_problem,
       solution: sr.solution,
       srId: sr.id,
