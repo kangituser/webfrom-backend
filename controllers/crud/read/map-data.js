@@ -6,7 +6,7 @@ const remapData = async data => {
       formattedData.push({
         srId: el.id,
         requestTime: formatDate(el.insert_time),
-         name: el.name_open,
+        name: el.name_open,
         phoneNumber: el.phone_open,
         emailAddress: el.email_open,
         mainCategory: el.problem_type,
@@ -20,7 +20,9 @@ const remapData = async data => {
         root_problem: el.root_problem,
         closedStatus: el.closeStatusName,
         dateToIssue: formatDate(el.dateToIssue),
-        close_time: formatDate(el.close_time)
+        close_time: formatDate(el.close_time),
+        blobName: '',
+        containerName: ''
       })
     });  
     return formattedData;

@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../util/database");
-
+const BLOB = require('./Blob');
+ 
 class CHANGE_LOG extends Model {}
 
 CHANGE_LOG.init(
@@ -14,6 +15,10 @@ CHANGE_LOG.init(
     srId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      references: {
+        model: BLOB,
+        key: 'srId'
+      }
     },
     old_value: {
       type: DataTypes.STRING,
@@ -40,5 +45,9 @@ CHANGE_LOG.init(
     freezeTableName: true,
   }
 );
+
+CHANGE_LOG.belongsTo(BLOB, { targetKey: 'srId', foreignKey: 'srId'})
+
+CHANGE_LOG.sync({ alter: false })
 
 module.exports = CHANGE_LOG;

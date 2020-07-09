@@ -25,7 +25,8 @@ const updateASR = async body => {
     const sub = await mainCatRouter(main.catId, subCategory);
     const asr = await findASRById(srId);   
      
-    const close_status = await findCloseStatus(closedStatus);  
+    const close_status = closedStatus !== 0 ? await findCloseStatus(closedStatus): '';  
+
     asr.title = title;
     asr.problem_type = main.catName || asr.problem_type;
     asr.problem_sub_type = sub || asr.problem_sub_type;
@@ -41,8 +42,8 @@ const updateASR = async body => {
     asr.dateToIssue = dateToIssue || asr.dateToIssue;
     asr.containerName = containerName || asr.containerName;
     asr.blobName = blobName || asr.blobName;
-    asr.closeStatusId = close_status.statusId || asr.closeStatusId;
-    asr.closeStatusName = close_status.statusName || asr.closeStatusName;
+    asr.closeStatusId = close_status.statusId ? close_status.statusId :  '';
+    asr.closeStatusName = close_status.statusName ? close_status.statusName :  '';
     asr.root_problem = root_problem || asr.root_problem;
     asr.close_time = new Date()
 

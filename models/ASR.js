@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../util/database");
-
+const BLOB = require('./Blob');
+ 
 class ASR extends Model {}
 
 ASR.init(
@@ -10,6 +11,10 @@ ASR.init(
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
+      references: {
+        model: BLOB, 
+        key: 'srId',
+      }
     },
     problem_type: {
       type: DataTypes.STRING,
@@ -109,6 +114,8 @@ ASR.init(
   }
 );
 
+ASR.hasMany(BLOB, { sourceKey: 'id', foreignKey: 'srId' });
+ 
 ASR.sync({ alter: false })
 
 

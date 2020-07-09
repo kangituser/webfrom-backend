@@ -1,32 +1,29 @@
-const mergeBLOBwithASR = async sr => {
-  const { findAllBlobs } = require("../../shared/blob-querrys");
-  const { findAllClosedStatuses } = require('../../shared/sr-querrys');
-  let merged = [];
-  const blob = await findAllBlobs();
-  const statuses = await findAllClosedStatuses(); 
-  
-  for (let i = 0; i < blob.length; i++) {
-    for (let j = 0; j < sr.length; j++) {
-      if (blob[i].srId === sr[j].srId) {
-        merged.push({
-          ...sr[j],
-          blobName: blob[i].blobName,
-          containerName: blob[i].containerName,
-        });
-      }
-    }
-  }
-  merged.sort((a, b) => b.srId - a.srId);
+const CHANGE_LOG = require('../../../models/Change_log');
 
+const mergeBLOBwithASR = async sr => {
+  const { findAllClosedStatuses } = require('../../shared/sr-querrys');
+  const uniqueSRIDsFROMs = require('./uniqueStatusSrIds')
+  const srSRIDS = uniqueSRIDsFROMs(sr);
+  const ASR = require('../../../models/ASR');
+  const BLOB = require('../../../models/BLOB');
+  const statuses = await findAllClosedStatuses();
   
-    for (let j = 0; j < merged.length; j++ ) {
-      for (let i = 0; i < statuses.length; i++) {
-        if (statuses[i].srId === merged[j].srId && +statuses[i].new_value === 3) {
-          merged[j].closed_by = statuses[i].edited_by;
-        }
+  let srs = await ASR.findAll({ 
+    where: { id: srSRIDS, status: 3 }, 
+    include: [
+      { model: BLOB, attributes: ['blobName', 'containerName'] },
+    ], raw: true }) 
+
+    console.log(srs)
+      
+  for (let j = 0; j < srs.length; j++ ) {
+    for (let i = 0; i < statuses.length; i++) {
+      if (statuses[i].srId == srs[j].id && +statuses[i].new_value === 3 || (+statuses[i].old_value !== 3 && +statuses[i].old_value === 3) || srs[j].status === 'סגור') {
+        srs[j].closed_by = statuses[i].edited_by;
       }
-    }        
-  return merged;
+     }
+  }     
+  return srs;
 };
 
 module.exports = { mergeBLOBwithASR };
