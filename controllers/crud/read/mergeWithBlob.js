@@ -5,7 +5,7 @@ const mergeBLOBwithASR = async sr => {
   const uniqueSRIDsFROMs = require('./uniqueStatusSrIds')
   const srSRIDS = uniqueSRIDsFROMs(sr);
   const ASR = require('../../../models/ASR');
-  const BLOB = require('../../../models/BLOB');
+  const BLOB = require('../../../models/Blob');
   const statuses = await findAllClosedStatuses();
   
   let srs = await ASR.findAll({ 
