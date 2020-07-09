@@ -9,7 +9,7 @@ const mergeBLOBwithASR = async sr => {
   const statuses = await findAllClosedStatuses();
   
   let srs = await ASR.findAll({ 
-    where: { id: srSRIDS, status: 3 }, 
+    where: { id: srSRIDS }, 
     include: [
       { model: BLOB, attributes: ['blobName', 'containerName'] },
     ], raw: true }) 
