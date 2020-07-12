@@ -1,6 +1,8 @@
 const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../util/database");
+const { formatDate } = require('../controllers/crud/read/format-dates');
 const BLOB = require('./Blob');
+const CHANGE_LOG = require('./Change_log');
  
 class ASR extends Model {}
 
@@ -43,7 +45,7 @@ ASR.init(
     insert_time: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-      allowNull: true,
+      allowNull: true
     },
     update_time: {
       type: DataTypes.DATE,
@@ -114,7 +116,8 @@ ASR.init(
   }
 );
 
-ASR.hasMany(BLOB, { sourceKey: 'id', foreignKey: 'srId' });
+ASR.hasOne(BLOB, { sourceKey: 'id', foreignKey: 'srId' });
+ASR.hasMany(CHANGE_LOG, { sourceKey: 'id', foreignKey: 'srId' })
  
 ASR.sync({ alter: false })
 

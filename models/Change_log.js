@@ -1,6 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../util/database");
-const BLOB = require('./Blob');
+const ASR = require('./ASR');
  
 class CHANGE_LOG extends Model {}
 
@@ -16,7 +16,7 @@ CHANGE_LOG.init(
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: BLOB,
+        model: ASR,
         key: 'srId'
       }
     },
@@ -46,7 +46,7 @@ CHANGE_LOG.init(
   }
 );
 
-CHANGE_LOG.belongsTo(BLOB, { targetKey: 'srId', foreignKey: 'srId'})
+// CHANGE_LOG.belongsTo(ASR, { targetKey: 'id', foreignKey: 'srId'})
 
 CHANGE_LOG.sync({ alter: false })
 

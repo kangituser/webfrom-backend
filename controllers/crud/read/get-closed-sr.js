@@ -1,20 +1,17 @@
 const findAllClosedASR = async (req, res) => {
-    const { findAllClosedASRs, findAllClosedASRsByEmail } = require('../../shared/sr-querrys');
-    const { findUserById } = require('../../shared/user-querrys');
-    const { responseHandler } = require('../../shared/response-handler');
-    const { remapData } = require('./map-data');
-    const { mergeBLOBwithASR } = require('./mergeWithBlob');
-    const { id: userId } = req;
-    let asr;
+  const { findUserById } = require('../../shared/user-querrys');
+  const { responseHandler } = require('../../shared/response-handler');
+  const { remap } = require('./remap-data');
+  const { id: userId } = req;
+  const status = 3;
     try {    
       const authUser = await findUserById(userId);    
       if (authUser.role === 1 || authUser.role === 2 || authUser.role === -1) {
-        asr = await findAllClosedASRs();     
+        responseHandler(res, 200, { serviceReq: await remap(status)})
       } else {
-        asr = await findAllClosedASRsByEmail(authUser.email);     
+        responseHandler(res, 200, { serviceReq: await remap(status, authUser.email)})
       }     
-      responseHandler(res, 200, { serviceReq: await mergeBLOBwithASR(await remapData(asr)) });
-    } catch (err) {
+     } catch (err) {
       responseHandler(res, 500, { message: err.message });
     }
   }
