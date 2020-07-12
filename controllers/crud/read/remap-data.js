@@ -17,18 +17,19 @@ const remap = async (status, email) => {
     where: query,
     order: [["id", "DESC"]],
     attributes: [
-      "id",
+      ["id", "srId"],
       "title",
       "description",
       ["name_open", "name"],
       ["email_open", "emailAddress"],
+      ["phone_open","phoneNumber"],
       ["problem_type", "mainCategory"],
       ["problem_sub_type", "subCategory"],
       ["module_klh_name", "klhModule"],
       ["impact_name", "affection"],
       ["status_name", "status"],
       ["closeStatusName", "closedStatus"],
-      "insert_time",
+      ["insert_time", "requestTime"],
       "dateToIssue",
       "close_time",
       "root_problem",
@@ -68,13 +69,13 @@ const remap = async (status, email) => {
     ] ,raw: true
   });
 
-  const asrIDS = [...new Set(serviceReq.map(s => s.id))];
+  const asrIDS = [...new Set(serviceReq.map(s => s.srId))];
 
   
   
   
   serviceReq.map(sr => {
-    sr.insert_time = formatDate(sr.insert_time);
+    sr.requestTime = formatDate(sr.insert_time);
     sr.dateToIssue = formatDate(sr.dateToIssue);
     sr.close_time = formatDate(sr.close_time);
     sr.edited_by = null
@@ -95,7 +96,7 @@ const remap = async (status, email) => {
 
   for (let i = 0; i < serviceReq.length; i++) {
     for (let j = 0; j < correctLOGS.length; j++) {
-      if (serviceReq[i].id == correctLOGS[j].srId) {
+      if (serviceReq[i].srId == correctLOGS[j].srId) {
         serviceReq[i].edited_by = correctLOGS[j].edited_by;
       }
     }
