@@ -30,6 +30,7 @@ const remap = async (status, email) => {
       ["status_name", "status"],
       ["closeStatusName", "closedStatus"],
       ["insert_time", "requestTime"],
+      // "insert_time",
       "dateToIssue",
       "close_time",
       "root_problem",
@@ -75,9 +76,9 @@ const remap = async (status, email) => {
   
   
   serviceReq.map(sr => {
-    sr.requestTime = formatDate(sr.insert_time);
-    sr.dateToIssue = formatDate(sr.dateToIssue);
-    sr.close_time = formatDate(sr.close_time);
+    sr.requestTime = new Date(sr.requestTime).getTime();
+    sr.dateToIssue = new Date(sr.dateToIssue).getTime();
+    sr.close_time = new Date(sr.close_time).getTime();
     sr.edited_by = null
     // sr.date_edited = formatDate(sr.date_edited);
     // sr.log_id = sr["mvcCHANGE_LOGs.log_id"];
