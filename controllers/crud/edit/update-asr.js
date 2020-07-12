@@ -22,14 +22,14 @@ const updateASR = async body => {
     const impact = await findImpact(affection);    
     const klh_moduleData = await findKLHModuleById(klhModule);
     const main = await findCategories(mainCategory)
-    const sub = await mainCatRouter(main.catId, subCategory);
+    const sub = subCategory == ' ' ? await mainCatRouter(main.catId, subCategory) : 0;
     const asr = await findASRById(srId);   
      
     const close_status = closedStatus !== 0 ? await findCloseStatus(closedStatus): '';  
 
     asr.title = title;
     asr.problem_type = main.catName || asr.problem_type;
-    asr.problem_sub_type = sub || asr.problem_sub_type;
+    asr.problem_sub_type = sub;
     asr.description = description || asr.description;
     asr.impact = affection || asr.impact;
     asr.impact_name = impact.affectionName || asr.impact_name;
