@@ -8,17 +8,17 @@ const STATE = require("../../models/state");
  
 const findASRById = async id => await ASR.findOne({ where: { id: id } });
 
-const findKLHModule = async KLHModule => await MODULE.findOne({ where: { moduleId: KLHModule }, attributes: ["moduleName"], raw: true });
+const findKLHModule = async KLHModule => await MODULE.findOne({ where: { moduleId: KLHModule }, attributes: ["moduleName"] });
 
-const findKLHModuleById = async id => await MODULE.findOne({ where: { moduleId: id }, attributes: ["moduleName"], raw: true });
+const findKLHModuleById = async id => await MODULE.findOne({ where: { moduleId: id }, attributes: ["moduleName"] });
 
-const findImpact = async impact => await IMPACT.findOne({ where: { catId: impact }, attributes: ["affectionName"], raw: true });
+const findImpact = async impact => await IMPACT.findOne({ where: { catId: impact }, attributes: ["affectionName"] });
 
-const findCategories = async problemType => await CATEGORIES.findOne({ where: { catId: problemType }, attributes: ["catName", "catId"], raw: true });
+const findCategories = async problemType => await CATEGORIES.findOne({ where: { catId: problemType }, attributes: ["catName", "catId"] });
 
-const findStatusById = async id => await STATUS.findOne({ where: { statusId: id }, attributes: ["statusName"], raw: true });
+const findStatusById = async id => await STATUS.findOne({ where: { statusId: id }, attributes: ["statusName"]});
 
-const findCloseStatus = async id => await CLOSE_STATUS.findOne({ where: { statusId: id }, attributes: [["statusName", "closeStatusName"]], raw: true });
+const findCloseStatus = async id => await CLOSE_STATUS.findOne({ where: { statusId: id }, attributes: [["statusName", "closedStatusName"]]});
 
 const findStateById = async srId => await STATE.findOne({ where: { srId: srId } });
 
