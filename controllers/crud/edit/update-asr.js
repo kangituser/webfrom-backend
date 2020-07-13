@@ -6,7 +6,7 @@ const updateASR = async body => {
   const { mainCatRouter } = require('../cat-router');
   const ASR = require('../../../models/ASR');
   const BLOB = require('../../../models/Blob');
-  const closedStatusName, subCatName, statusName;
+  let closedStatusName, subCatName, statusName;
   try {
     // const { statusName } = status ? await findStatusById(status) : null;        
     const { affectionName } = await findImpact(affection);    
