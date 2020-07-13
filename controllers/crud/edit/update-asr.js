@@ -6,29 +6,14 @@ const updateASR = async body => {
   const { mainCatRouter } = require('../cat-router');
   const ASR = require('../../../models/ASR');
   const BLOB = require('../../../models/Blob');
-  let closedStatusName, subCatName, statusName;
+
   try {
-    // const { statusName } = status ? await findStatusById(status) : null;        
+    const { statusName } = status ? await findStatusById(status) : status;
     const { affectionName } = await findImpact(affection);    
     const { moduleName } = await findKLHModuleById(klhModule);
     const { catId, catName } = await findCategories(mainCategory)    
-    
-    if (subCategory == null || subCategory == '') {
-      subCatName = null;
-    } 
-    subCatName = await mainCatRouter(catId, subCategory);   
-    
-    if (closedStatus != 0) {
-      closedStatusName = await findCloseStatus(closedStatus);  
-    } else {
-      closedStatusName = null;
-    }
-
-    if (!status) {
-      statusName = null;
-    } else {
-      statusName = await findStatusById(status);
-    }
+    const { catName: subCatName } = subCategory == ' ' ?  subCategory : await mainCatRouter(catId, subCategory);   
+    const { closeStatusName } = closedStatus == 0 ? null : await findCloseStatus(closedStatus);  
     
     await ASR.update({ 
       title: title, 
@@ -45,7 +30,7 @@ const updateASR = async body => {
       solution: solution,
       dateToIssue: dateToIssue,
       closeStatusId: closedStatus,
-      closeStatusName: closedStatusName,
+      closeStatusName: closeStatusName,
       root_problem: root_problem,
       close_time: new Date()
      }, 
