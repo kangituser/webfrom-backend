@@ -1,24 +1,19 @@
 const SR_CAT = require('../../models/sr_categories');
 const MAL_CAT = require('../../models/malfunction_categories');
 
-const mainCatRouter = async (main, cat) => {
-    let response, name;
+const mainCatRouter = async (main, cat) => {  
+  console.log(cat);
+  
     switch (main) {
       case 3:
-        name = await mapper(cat, SR_CAT);
-        response = name.catName;
-        break;
-      case 4:
-        name = await mapper(cat, MAL_CAT);
-        response = name.catName;
-        break;
+        return await mapper(cat, SR_CAT);
+      case 4:        
+        return await mapper(cat, MAL_CAT);
       default:
-        response = ' ';
-        break;
+        return ' ';
       }
-      return response;
   }
   
-  const mapper = async (cat, model) => await model.findOne({ where: { catId: cat }, attributes: ['catName']});
+  const mapper = async (cat, model) => await model.findOne({ where: { catId: cat }, attributes: ["catName"], raw: true});
 
   module.exports = { mainCatRouter };

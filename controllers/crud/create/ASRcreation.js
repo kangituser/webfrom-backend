@@ -8,12 +8,12 @@ const ASRcreation = async asrToCreate => {
   const { klhModule, impact, problemType, problemSubType, title, name, idOpen, email, phone, description } = asrToCreate;
   const { moduleName } = await findKLHModule(klhModule);
   const { affectionName } = await findImpact(impact);  
-  const { catName } = await findCategories(problemType);    
-  const sub = await mainCatRouter(problemType, problemSubType);
+  const { catName } = await findCategories(problemType);      
+  const { catName: subCatName } = await mainCatRouter(problemType, problemSubType); 
   
   return await ASR.create({
     problem_type: catName,
-    problem_sub_type: sub,
+    problem_sub_type: subCatName || null,
     title: title,
     name_open: name,
     id_open: idOpen,

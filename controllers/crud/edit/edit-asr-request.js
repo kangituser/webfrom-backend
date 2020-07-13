@@ -18,11 +18,12 @@ const editASRequest = async (body, user, originalUrl, res) => {
         responseHandler(res, 201, { message: 'created a new state' });
        } else {
          if (states.includes(state.syncStatus)) { 
-           const updatedASR = await findASRById(srId);                            
+           const updatedASR = await findASRById(srId);   
+           await updateASR(body)                         
            const editedASR = await findASRById(srId);                       
             
             // if (updatedASR.impact !== affection) { 
-             await LOG.create({ old_value: updatedASR.impact, new_value: affection, date_edited: new Date(), edited_by: user.fullName, srId: srId })           
+             await LOG.create({ old_value: updatedASR.impact, new_value: status, date_edited: new Date(), edited_by: user.fullName, srId: srId })           
             // }
             await updateStateToEdit(state)           
             if (status === 2) {
