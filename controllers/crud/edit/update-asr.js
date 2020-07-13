@@ -8,13 +8,13 @@ const updateASR = async body => {
   const BLOB = require('../../../models/Blob');
 
   try {
-    const { statusName } = await findStatusById(status);        
+    const { statusName: nameOfStatus } = await findStatusById(status);        
     const { affectionName } = await findImpact(affection);    
     const { moduleName } = await findKLHModuleById(klhModule);
     const { catId, catName } = await findCategories(mainCategory)    
-    const { catName: subCatName } = subCategory == ' ' ? null: await mainCatRouter(catId, subCategory);   
-    const { statusName: closedStatusName } = closedStatus == 0 ? null : await findCloseStatus(closedStatus);  
-    console.log(`statusName: ${statusName}, status: ${status}`);
+    const { catName: subCatName } = subCategory == null ? null : await mainCatRouter(catId, subCategory);   
+    const { statusName: closedStatusName } = closedStatus == null ? null : await findCloseStatus(closedStatus);  
+    console.log(`nameOfStatus: ${nameOfStatus}, status: ${status}`);
     console.log(`subCatName: ${subCatName}, subCategory: ${subCategory}`);
     console.log(`closedStatusName: ${closedStatusName}, closedStatus: ${closedStatus}`);
     
@@ -28,7 +28,7 @@ const updateASR = async body => {
       sr_cust_module: klhModule,
       module_klh_name: moduleName,
       status: status,
-      status_name: statusName,
+      status_name: nameOfStatus,
       update_time: new Date(),
       solution: solution,
       dateToIssue: dateToIssue,
