@@ -11,7 +11,6 @@ const deleteASR = async (req, res) => {
     deleteASRequest(srId, res);
   } else {
     responseHandler(res, 422, { message: "unauthorized user " });
-
   }
 };
 

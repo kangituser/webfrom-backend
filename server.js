@@ -32,5 +32,5 @@ sequelize.sync({ alter: false })
 // sequelize.sync({ force: true })
 .then(() => {
     app.listen(PORT, console.log(`started server on port ${PORT}`));
-    console.log("synced to azure srdb");
+     console.log(`connected to ${process.env.DATABASE}`);
 }).catch((err) => console.log(err));

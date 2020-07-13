@@ -6,7 +6,7 @@ const Update = async (req, res) => {
     
     const { originalUrl, id } = req;
     const { role, email, fullName, isActive, phoneNumber, id: userId } = req.body.user;
-    const roles =[1,-1];
+    const roles = [1,-1];
     
     const USERToUpdate = {
       role: role,

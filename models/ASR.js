@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../util/database");
 const BLOB = require('./Blob');
-// const CHANGE_LOG = require('./Change_log');
+const CHANGE_LOG = require('./Change_log');
  
 class ASR extends Model {}
 
@@ -12,10 +12,10 @@ ASR.init(
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: BLOB, 
-        key: 'srId',
-      }
+      // references: {
+      //   model: BLOB, 
+      //   key: 'srId',
+      // }
     },
     problem_type: {
       type: DataTypes.STRING,
@@ -116,7 +116,7 @@ ASR.init(
 );
 
 ASR.hasOne(BLOB, { sourceKey: 'id', foreignKey: 'srId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-// ASR.hasMany(CHANGE_LOG, { sourceKey: 'id', foreignKey: 'srId' })
+ASR.hasMany(CHANGE_LOG, { sourceKey: 'id', foreignKey: 'srId' })
  
 ASR.sync({ alter: false })
 
