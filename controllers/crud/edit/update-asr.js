@@ -2,7 +2,7 @@ const updateASR = async body => {
   const { status, affection, klhModule, mainCategory, subCategory, srId, closedStatus, title, description, solution, 
     dateToIssue, containerName, blobName, root_problem } = body;
     
-  const { findStatusById, findImpact, findKLHModuleById, findCategories, findASRById, findCloseStatus } = require('../../shared/sr-querrys');
+  const { findStatusById, findImpact, findKLHModuleById, findCategories, findCloseStatus } = require('../../shared/sr-querrys');
   const { mainCatRouter } = require('../cat-router');
   const ASR = require('../../../models/ASR');
   const BLOB = require('../../../models/Blob');
@@ -13,7 +13,7 @@ const updateASR = async body => {
     const { moduleName } = await findKLHModuleById(klhModule);
     const { catId, catName } = await findCategories(mainCategory)    
     const { catName: subCatName } = subCategory == ' ' ? null: await mainCatRouter(catId, subCategory);   
-    const { statusName: closedStatusName } = closedStatus == 0 ? null : await findCloseStatus(closedStatus);  
+    const { closeStatusName } = closedStatus == 0 ? null : await findCloseStatus(closedStatus);  
     
     await ASR.update({ 
       title: title, 
@@ -30,7 +30,7 @@ const updateASR = async body => {
       solution: solution,
       dateToIssue: dateToIssue,
       closeStatusId: closedStatus,
-      closeStatusName: closedStatusName,
+      closeStatusName: closeStatusName,
       root_problem: root_problem,
       close_time: new Date()
      }, 

@@ -18,7 +18,7 @@ const findCategories = async problemType => await CATEGORIES.findOne({ where: { 
 
 const findStatusById = async id => await STATUS.findOne({ where: { statusId: id }, attributes: ["statusName"], raw: true });
 
-const findCloseStatus = async id => await CLOSE_STATUS.findOne({ where: { statusId: id }, attributes: [["statusName"]], raw: true });
+const findCloseStatus = async id => await CLOSE_STATUS.findOne({ where: { statusId: id }, attributes: [["statusName", "closeStatusName"]], raw: true });
 
 const findStateById = async srId => await STATE.findOne({ where: { srId: srId } });
 
