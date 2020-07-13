@@ -10,13 +10,14 @@ const Login = async (req, res) => {
   try {
     const user = await findUserByEmail(email);
     const { id, isActive, password: pwd, role } = user;
-    const [tokenData] = await findTokenByEmail(email);
+    const { expirationDate } = await findTokenByEmail(email);
+    // const [tokenData] = await findTokenByEmail(email);
     const pwdsAreEqual = await comparePassowrds(password, pwd);
     const token = loginJWTToken(id);
     
     if (user && isActive === true) {
       if (pwdsAreEqual) {
-        responseHandler(res, 201, { auth: true, token: token, expirationDate: tokenData.expirationDate , role: role })
+        responseHandler(res, 201, { auth: true, token: token, expirationDate: expirationDate , role: role })
       } else {
         responseHandler(res, 401, { auth: false, token: null, message: 'incorrect password'})
       }

@@ -4,7 +4,6 @@ const GetAll = async (req, res) => {
     const { findAllUsers } = require('../shared/user-querrys');
   try {
     const users = await findAllUsers();
-    users.sort((a, b) => b.id - a.id);
 
     responseHandler(res, 200, { users: users });
   } catch (err) {

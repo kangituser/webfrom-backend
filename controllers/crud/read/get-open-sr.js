@@ -4,12 +4,13 @@ const findAllOpenASR = async (req, res) => {
   const { remap } = require('./remap-data');
   const { id } = req;
   const status = [1,2,4,5,6];
+  const roles = [1,2,-1];
     try {    
-      const authUser = await findUserById(id);    
-      if (authUser.role === 1 || authUser.role === 2 || authUser.role === -1) {
+      const { email, role } = await findUserById(id);    
+      if (roles.includes(role)) {
         responseHandler(res, 200, { serviceReq: await remap(status) });
       } else {
-        responseHandler(res, 200, { serviceReq: await remap(status, authUser.email) });
+        responseHandler(res, 200, { serviceReq: await remap(status, email) });
       }          
     } catch (err) {
       responseHandler(res, 500, { message: err.message });

@@ -6,10 +6,11 @@ const Reset = async (req, res) => {
     const { findUnexpiredTokenByEmail } = require('../shared/pwd-token-querrys');
     const { email, password: pwd, token } = req.body;
     const { originalUrl: route } = req;
+    
     try {
       const tokenData = await findUnexpiredTokenByEmail(email);
       if (tokenData) {
-        if (tokenData.token === token) {
+        if (tokenData.token == token) {
           const hash = await hashPassword(pwd);
           const user = await findSingleUserByEmail(email);
           

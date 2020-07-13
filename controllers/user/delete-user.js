@@ -1,20 +1,21 @@
 const Delete = async (req , res) => {
     const { responseHandler } = require('../shared/response-handler');
-    const { findUserTokensByEmail } = require('../shared/token-querrys');
     const { findUserById } = require('../shared/user-querrys');
+    const TOKEN = require('../../models/token');
+    const USER = require('../../models/user');
     
     const { userId } = req.body;
     const { id } = req;
+    const roles = [1, -1];
     
      try {
-      const loggedIn = await findUserById(id);
+      const { role } = await findUserById(id);
 
-      if (loggedIn.role === 1 || loggedIn.role === -1) {
-        const user = await findUserById(userId);      
-        const tokens = await findUserTokensByEmail(user.email);
-        
-        tokens.forEach(token => token.destroy());
-        await user.destroy();
+      if (roles.includes(role)) {
+      const { email } = await findUserById(userId);      
+
+        await TOKEN.destroy({ where: { userEmail: email }});
+        await USER.destroy({ where: { id: userId }});
 
         responseHandler(res, 201, { message: `user deleted successfully` });
       } else {

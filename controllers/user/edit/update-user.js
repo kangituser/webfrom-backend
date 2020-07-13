@@ -6,22 +6,23 @@ const Update = async (req, res) => {
     
     const { originalUrl, id } = req;
     const { role, email, fullName, isActive, phoneNumber, id: userId } = req.body.user;
-
+    const roles =[1,-1];
+    
     const USERToUpdate = {
-      userRole: role,
+      role: role,
       email: email,
-      name: fullName,
-      active: isActive,
-      phone: phoneNumber
+      fullName: fullName,
+      isActive: isActive,
+      phoneNumber: phoneNumber
     }
   
     try {
-      const loggedIn = await findUserById(id);
-      if (loggedIn.role === 1 || loggedIn.role === -1) {
+      const { role } = await findUserById(id);
+      if (roles.includes(role)) {
         const user = await findUserById(userId);
         if (user) {
           await EditUser(user, USERToUpdate, originalUrl);        
-          responseHandler(res, 201, { message: `${USERToUpdate.name} successfully updated` });
+          responseHandler(res, 201, { message: `${fullName} successfully updated` });
         } else {
           responseHandler(res, 404, { message: "user does not exist" });
         }

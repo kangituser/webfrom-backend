@@ -1,15 +1,10 @@
 const actualDeletion = async srId => {
-  const { findASRById } = require('../../shared/sr-querrys');
-  const { findBlobById } = require('../../shared/blob-querrys');
+  const BLOB = require('../../../models/Blob');
+  const ASR = require('../../../models/ASR');
+  
   try {
-    const asr = await findASRById(srId);
-    const image = await findBlobById(asr.id);
-    if (image) {
-      await image.destroy();
-    }
-    if (asr) {
-      await asr.destroy();
-    }
+    await BLOB.destroy({ where: { srId: srId }})
+    await ASR.destroy({ where: { id: srId }});
   } catch (err) {
     console.log(err.message);
   }

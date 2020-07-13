@@ -7,11 +7,12 @@ const Update = async (req, res) => {
   
   const { password, id: userId } = req.body;
   const { id, originalUrl } = req;
+  const roles = [1,-1];
 
   try {
-    const authUser = await findUserById(id);
+    const { role } = await findUserById(id);
     const hash = await hashPassword(password);
-    if (authUser.role === 1 || authUser.role === -1) {
+    if (roles.includes(role)) {
       const user = await findUserById(userId); 
 
       if (user) {

@@ -1,55 +1,40 @@
 const updateASR = async body => {    
-  const { 
-    status, 
-    affection, 
-    klhModule, 
-    mainCategory, 
-    subCategory, 
-    srId, 
-    closedStatus, 
-    title, 
-    description, 
-    solution, 
-    dateToIssue, 
-    containerName, 
-    blobName, 
-    root_problem 
-  } = body;
+  const { status, affection, klhModule, mainCategory, subCategory, srId, closedStatus, title, description, solution, 
+    dateToIssue, containerName, blobName, root_problem } = body;
   const { findStatusById, findImpact, findKLHModuleById, findCategories, findASRById, findCloseStatus } = require('../../shared/sr-querrys');
-  const { mainCatRouter } = require('../cat-router')
+  const { mainCatRouter } = require('../cat-router');
+  const ASR = require('../../../models/ASR');
   try {
-    const statusData = await findStatusById(status);        
+    const { statusName } = await findStatusById(status);        
     const impact = await findImpact(affection);    
-    const klh_moduleData = await findKLHModuleById(klhModule);
-    const main = await findCategories(mainCategory)
-    const sub = subCategory == ' ' ? await mainCatRouter(main.catId, subCategory) : 0;
-    const asr = await findASRById(srId);   
+    const { moduleName } = await findKLHModuleById(klhModule);
+    const { catId, catName } = await findCategories(mainCategory)
+    const sub = subCategory == ' ' ? await mainCatRouter(catId, subCategory) : null;
      
-    const close_status = closedStatus !== 0 ? await findCloseStatus(closedStatus): '';  
+    const { closedStatusName } = closedStatus !== 0 ? await findCloseStatus(closedStatus): null;  
 
-    asr.title = title;
-    asr.problem_type = main.catName || asr.problem_type;
-    asr.problem_sub_type = sub;
-    asr.description = description || asr.description;
-    asr.impact = affection || asr.impact;
-    asr.impact_name = impact.affectionName || asr.impact_name;
-    asr.sr_cust_module = klhModule || asr.sr_cust_module;
-    asr.module_klh_name = klh_moduleData.moduleName || asr.module_klh_name;
-    asr.status = statusData.statusId;
-    asr.status_name = statusData.statusName || asr.status_name;
-    asr.update_time = new Date();
-    asr.solution = solution || asr.solution;
-    asr.dateToIssue = dateToIssue || asr.dateToIssue;
-    asr.containerName = containerName || asr.containerName;
-    asr.blobName = blobName || asr.blobName;
-    asr.closeStatusId = close_status.statusId ? close_status.statusId :  '';
-    asr.closeStatusName = close_status.statusName ? close_status.statusName :  '';
-    asr.root_problem = root_problem || asr.root_problem;
-    asr.close_time = new Date()
-
-    return await asr.save();
-
-    
+    await ASR.update({ 
+      title: title, 
+      problem_type: catName,
+      problem_sub_type: sub,
+      description: description,
+      impact: affection,
+      impact_name: impact,
+      sr_cust_module: klhModule,
+      module_klh_name: moduleName,
+      status: status,
+      status_name: statusName,
+      update_time: new Date(),
+      solution: solution,
+      dateToIssue: dateToIssue,
+      containerName: containerName,
+      blobName: blobName,
+      closeStatusId: closedStatus,
+      closeStatusName: closedStatusName,
+      root_problem: root_problem,
+      close_time: new Date()
+     }, 
+     { where: { id: srId }})
     
   } catch (err) {
     console.log(err.message);

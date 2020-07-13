@@ -9,6 +9,6 @@ const createPWDToken = async (hash, date, email) => await PWDTOKEN.create({
   userEmail: email,
 });
 
-const findUnexpiredTokenByEmail = async email => await PWDTOKEN.findOne({ where: { userEmail: email, expirationDate: { [Op.gt]: new Date() } }})
+const findUnexpiredTokenByEmail = async email => await PWDTOKEN.findOne({ where: { userEmail: email, expirationDate: { [Op.gte]: new Date() } }})
 
 module.exports = { findPWDTokenByEmail, createPWDToken, findUnexpiredTokenByEmail };
