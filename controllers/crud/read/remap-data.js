@@ -1,5 +1,3 @@
-const { map } = require('mssql');
-
 const remap = async (status, email) => {
   const  { fn, col } = require('sequelize');
   const { formatDate } = require("./format-dates");
@@ -76,6 +74,7 @@ const remap = async (status, email) => {
     sr.requestTime = formatDate(sr.requestTime);
     sr.dateToIssue = formatDate(sr.dateToIssue);
     sr.close_time = formatDate(sr.close_time);
+    sr.closed_by = sr.edited_by;
     delete sr["mvcCHANGE_LOGs.date_edited"];
   })
   
@@ -86,6 +85,7 @@ const remap = async (status, email) => {
     delete sr.new_value;
     delete sr.old_value;
     delete sr.latest_id;
+    delete sr.edited_by;
   })
 
   const mapped = [];
