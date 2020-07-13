@@ -1,3 +1,5 @@
+const { map } = require('mssql');
+
 const remap = async (status, email) => {
   const  { fn, col } = require('sequelize');
   const { formatDate } = require("./format-dates");
@@ -6,11 +8,11 @@ const remap = async (status, email) => {
   const CHANGE_LOG = require("../../../models/Change_log");
   let serviceReq, query;
   if (email) {
-    query = { status: status, email: email };
+    query = { status: status, email_open: email };
   } else {
     query = { status: status };
   }
-
+  
   serviceReq = await ASR.findAll({
     where: query,
     order: [["id", "DESC"]],
@@ -76,26 +78,31 @@ const remap = async (status, email) => {
     sr.close_time = formatDate(sr.close_time);
     delete sr["mvcCHANGE_LOGs.date_edited"];
   })
-
-  for (let i = 0; i < serviceReq.length-1; i++) {
-    while (serviceReq[i].srId == serviceReq[i+1].srId) {
-      for (let j = i; j < serviceReq.length-1;) {
-        serviceReq.splice(j,1); 
-        j++;
-      }
-    }
-  }
-
+  
   serviceReq.map(sr => {
-    if (sr.new_value != 3 && sr.old_value != 3 || sr.new_value != 0 && sr.old_value != 3) {
+    if (sr.new_value != 3) {
       sr.edited_by = null;
     }
     delete sr.new_value;
     delete sr.old_value;
     delete sr.latest_id;
   })
+
+  const mapped = [];
+
+  for (let i = 0; i < serviceReq.length; i++) {
+    if (i < serviceReq.length -1) {
+      if (serviceReq[i].srId == serviceReq[i+1].srId) {
+        continue;
+      } else {
+        mapped.push(serviceReq[i]);
+      }
+    } else {
+      mapped.push(serviceReq[i]);
+    }
+  }
   
-  return serviceReq;
-};
+  return mapped;
+ };
 
 module.exports = { remap };

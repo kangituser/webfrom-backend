@@ -6,7 +6,7 @@ const findAllClosedASR = async (req, res) => {
   const status = 3;
   const roles = [1,2,-1];
     try {    
-      const { role, email } = await findUserById(userId);    
+      const { role, email } = await findUserById(userId);   
       if (roles.includes(role)) {
         responseHandler(res, 200, { serviceReq: await remap(status)})
       } else {
