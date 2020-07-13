@@ -13,7 +13,7 @@ const updateASR = async body => {
     const { moduleName } = await findKLHModuleById(klhModule);
     const { catId, catName } = await findCategories(mainCategory)    
     
-    if (subCategory.trim() == null || subCategory.trim() == '') {
+    if (subCategory == null || subCategory == '') {
       subCatName = null;
     } 
     subCatName = await mainCatRouter(catId, subCategory);   
