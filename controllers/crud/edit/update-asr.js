@@ -8,32 +8,56 @@ const updateASR = async body => {
   const BLOB = require('../../../models/Blob');
 
   try {
-    const { statusName: nameOfStatus } = await findStatusById(status);        
+    // const { statusName: nameOfStatus } = await findStatusById(status);        
     const { affectionName } = await findImpact(affection);    
     const { moduleName } = await findKLHModuleById(klhModule);
     const { catId, catName } = await findCategories(mainCategory)    
-    const { catName: subCatName } = subCategory == null ? null : await mainCatRouter(catId, subCategory);   
-    const { statusName: closedStatusName } = closedStatus == null ? null : await findCloseStatus(closedStatus);  
-    console.log(`nameOfStatus: ${nameOfStatus}, status: ${status}`);
-    console.log(`subCatName: ${subCatName}, subCategory: ${subCategory}`);
-    console.log(`closedStatusName: ${closedStatusName}, closedStatus: ${closedStatus}`);
+    // const { catName: subCatName } = subCategory ? await mainCatRouter(catId, subCategory): null;   
+    // const { statusName: closedStatusName } = closedStatus == null ? null : await findCloseStatus(closedStatus);  
+
+    const getSubCatName = async (catId, subCategory) => {
+      if(subCategory) {
+        const { catName: subCatName } = await mainCatRouter(catId, subCategory)
+        return subCatName;
+      } else {
+        return null;
+      }
+    };
+    const getClosedStatusName = async closedStatus => {
+      if (closedStatus) {
+        const { statusName: closedStatusName } = await findCloseStatus(closedStatus);  
+        return closedStatusName;
+      } else {
+        return null;
+      }
+    };
+
+    const getNameOfStatus = async status => {
+      if (status) {
+        const { statusName: nameOfStatus } = await findStatusById(status);
+        return nameOfStatus;
+      } else {
+        return null;
+      }
+    };
+
     
     await ASR.update({ 
       title: title, 
       problem_type: catName,
-      problem_sub_type: subCatName,
+      problem_sub_type: await getSubCatName(catId, subCategory),
       description: description,
       impact: affection,
       impact_name: affectionName,
       sr_cust_module: klhModule,
       module_klh_name: moduleName,
       status: status,
-      status_name: nameOfStatus,
+      status_name: await getNameOfStatus(status),
       update_time: new Date(),
       solution: solution,
       dateToIssue: dateToIssue,
       closeStatusId: closedStatus,
-      closeStatusName: closedStatusName,
+      closeStatusName: await getClosedStatusName(closedStatus),
       root_problem: root_problem,
       close_time: new Date()
      }, 
