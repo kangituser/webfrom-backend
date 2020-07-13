@@ -13,7 +13,7 @@ const updateASR = async body => {
     const { moduleName } = await findKLHModuleById(klhModule);
     const { catId, catName } = await findCategories(mainCategory)    
     const { catName: subCatName } = subCategory == ' ' ? null: await mainCatRouter(catId, subCategory);   
-    const { closedStatusName } = closedStatus == 0 ? null: await findCloseStatus(closedStatus);  
+    const { statusName: closedStatusName } = closedStatus == 0 ? null : await findCloseStatus(closedStatus);  
     
     await ASR.update({ 
       title: title, 
