@@ -2,6 +2,7 @@ const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../util/database");
 const BLOB = require('./Blob');
 const CHANGE_LOG = require('./Change_log');
+const { MAX } = require("mssql");
  
 class ASR extends Model {}
 
@@ -30,7 +31,7 @@ ASR.init(
       allowNull: true,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     status: {
