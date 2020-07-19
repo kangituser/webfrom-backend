@@ -27,6 +27,8 @@ const createASRequest = async (req, res) => {
     const klhUsers = await findKLHUsers();
     let klhEmails = klhUsers.map((user) => user.email);
 
+    authUser.role == 3 ? klhEmails.unshift(authUser.email) : '';
+
     const asr = await ASRcreation(ASRToCreate);
     await createBlob(asr.id, blobName, containerName);
     await createState(asr.id);

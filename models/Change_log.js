@@ -17,7 +17,7 @@ CHANGE_LOG.init(
       allowNull: true,
       references: {
         model: ASR,
-        key: 'srId'
+        key: 'id'
       }
     },
     old_value: {

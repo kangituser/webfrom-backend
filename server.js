@@ -1,8 +1,9 @@
 if (process.env.NODE_ENV == "development") {
   require("dotenv").config();
 }
+
 const express = require("express");
-const bodyParser = require("body-parser");
+const { json } = require('express');
 const PORT = process.env.PORT || 8080;
 
 const { sequelize } = require("./util/database");
@@ -12,7 +13,7 @@ const SRRoutes = require("./routes/service-request");
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(json());
 
 app.use("/user", UserRoutes);
 app.use("/service-request", SRRoutes);
