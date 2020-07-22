@@ -14,6 +14,8 @@ const sendASRDeitedMail = async (updatedASR, authUser, ASRtoUpdate, isChanged, r
   } else {
     emails = email_open;
   }
+
+  console.log(email_open)
     messageRoutelet({
       srId: id,
       category: problem_type,

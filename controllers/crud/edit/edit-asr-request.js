@@ -27,7 +27,6 @@ const editASRequest = async (body, user, originalUrl, res) => {
             // }
             await updateStateToEdit(state)           
             if (status === 2) {
-              
               sendASRDeitedMail(editedASR, user, body, true, originalUrl, true, false);
             } else if (status === 3) {            
               sendASRDeitedMail(editedASR, user, body, true, originalUrl, false, true);
