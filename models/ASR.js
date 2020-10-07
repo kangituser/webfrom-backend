@@ -2,6 +2,7 @@ const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../util/database");
 const BLOB = require('./Blob');
 const CHANGE_LOG = require('./Change_log');
+const CLOSE_STATUS = require("./close-status");
   
 class ASR extends Model {}
 
@@ -117,6 +118,7 @@ ASR.init(
 
 ASR.hasOne(BLOB, { sourceKey: 'id', foreignKey: 'srId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 ASR.hasMany(CHANGE_LOG, { sourceKey: 'id', foreignKey: 'srId' })
+ASR.hasOne(CLOSE_STATUS, { sourceKey: 'closedStatusId', foreignKey: 'statusId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
  
 ASR.sync({ alter: false })
 

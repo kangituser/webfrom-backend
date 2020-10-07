@@ -1,3 +1,5 @@
+const CLOSE_STATUS = require('../../../models/close-status');
+
 const remap = async (status, email) => {
   const  { fn, col } = require('sequelize');
   const { formatDate } = require("./format-dates");
@@ -29,6 +31,7 @@ const remap = async (status, email) => {
       ["closeStatusName", "closedStatus"],
       ["insert_time", "requestTime"],
       ["closeStatusId","closedStatus"],
+      ["statusName", "statusName"],
       "dateToIssue",
       "close_time",
       "root_problem",
@@ -55,6 +58,7 @@ const remap = async (status, email) => {
       ["closeStatusName", "closedStatus"],
       ["insert_time", "requestTime"],
       ["closeStatusId","closedStatus"],
+      ["statusName", "statusName"],
       "dateToIssue",
       "close_time",
       "root_problem",
@@ -69,6 +73,7 @@ const remap = async (status, email) => {
     include: [
       { model: BLOB, attributes: [] },
       { model: CHANGE_LOG, attributes: [] },
+      { model: CLOSE_STATUS, attributes: ['statusName']}
     ] ,raw: true
   });
 
