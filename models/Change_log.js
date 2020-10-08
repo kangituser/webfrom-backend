@@ -16,10 +16,10 @@ CHANGE_LOG.init(
     srId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      references: {
-        model: ASR,
-        key: 'id'
-      }
+      // references: {
+      //   model: ASR,
+      //   key: 'id'
+      // }
     },
     old_value: {
       type: DataTypes.STRING,

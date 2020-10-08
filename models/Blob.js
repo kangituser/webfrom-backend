@@ -15,10 +15,10 @@ BLOB.init(
     srId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      references: {
-        model: ASR,
-        key: 'id'
-      }
+      // references: {
+      //   model: ASR,
+      //   referenceKey: 'id'
+      // }
     },
     blobName: {
       type: DataTypes.STRING,
@@ -41,7 +41,7 @@ BLOB.init(
   }
 );
 
-// BLOB.belongsTo(ASR, { targetKey: 'id', foreignKey: 'srId'})
+  // BLOB.belongsTo(models.ASR, { targetKey: 'id', foreignKey: 'srId'})
 
 BLOB.sync({ alter: false })
 

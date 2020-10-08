@@ -13,7 +13,8 @@ const findAllOpenASR = async (req, res) => {
         responseHandler(res, 200, { serviceReq: await remap(status, email) });
       }          
     } catch (err) {
-      responseHandler(res, 500, { message: err.message });
+      console.log('here ', err)
+      responseHandler(res, 500, { flag: 1, message: err.message });
     }
   }
 

@@ -8,12 +8,9 @@ const updateASR = async body => {
   const BLOB = require('../../../models/Blob');
 
   try {
-    // const { statusName: nameOfStatus } = await findStatusById(status);        
     const { affectionName } = await findImpact(affection);    
     const { moduleName } = await findKLHModuleById(klhModule);
     const { catId, catName } = await findCategories(mainCategory)    
-    // const { catName: subCatName } = subCategory ? await mainCatRouter(catId, subCategory): null;   
-    // const { statusName: closedStatusName } = closedStatus == null ? null : await findCloseStatus(closedStatus);  
 
     const getSubCatName = async (catId, subCategory) => {
       if(subCategory) {
@@ -25,8 +22,8 @@ const updateASR = async body => {
     };
     const getClosedStatusName = async closedStatus => {
       if (closedStatus) {
-        const { statusName: closedStatusName } = await findCloseStatus(closedStatus);  
-        return closedStatusName;
+        const closedStatusObj = await findCloseStatus(closedStatus);  
+        return closedStatusObj.statusName;
       } else {
         return null;
       }
@@ -40,7 +37,6 @@ const updateASR = async body => {
         return null;
       }
     };
-
     
     await ASR.update({ 
       title: title, 

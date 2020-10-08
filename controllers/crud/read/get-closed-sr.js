@@ -13,6 +13,7 @@ const findAllClosedASR = async (req, res) => {
         responseHandler(res, 200, { serviceReq: await remap(status, email)})
       }     
      } catch (err) {
+       console.log('here ', err)
       responseHandler(res, 500, { message: err.message });
     }
   }

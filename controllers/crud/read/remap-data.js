@@ -1,3 +1,5 @@
+const CLOSE_STATUS = require('../../../models/close-status');
+
 const remap = async (status, email) => {
   const  { fn, col } = require('sequelize');
   const { formatDate } = require("./format-dates");
@@ -26,8 +28,8 @@ const remap = async (status, email) => {
       ["module_klh_name", "klhModule"],
       ["impact_name", "affection"],
       ["status_name", "status"],
-      ["closeStatusName", "closedStatus"],
       ["insert_time", "requestTime"],
+      "mvcCLOSE_STATUS.statusName",
       "dateToIssue",
       "close_time",
       "root_problem",
@@ -51,8 +53,11 @@ const remap = async (status, email) => {
       ["module_klh_name", "klhModule"],
       ["impact_name", "affection"],
       ["status_name", "status"],
-      ["closeStatusName", "closedStatus"],
+      // ["closeStatusName", "closedStatus"],
       ["insert_time", "requestTime"],
+      // ["closeStatusId","closedStatus"],
+      "mvcCLOSE_STATUS.statusName",
+      // ["mvcCLOSE_STATUS.statusName", "closedStatus"],
       "dateToIssue",
       "close_time",
       "root_problem",
@@ -67,6 +72,8 @@ const remap = async (status, email) => {
     include: [
       { model: BLOB, attributes: [] },
       { model: CHANGE_LOG, attributes: [] },
+      { model: CLOSE_STATUS, attributes: ['statusName']}
+      
     ] ,raw: true
   });
 
@@ -76,6 +83,8 @@ const remap = async (status, email) => {
     sr.close_time = formatDate(sr.close_time);
     sr.closed_by = sr.edited_by;
     delete sr["mvcCHANGE_LOGs.date_edited"];
+    sr.closedStatus = sr.statusName;
+    delete sr.statusName;
   })
   
   serviceReq.map(sr => {
