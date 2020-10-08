@@ -8,12 +8,9 @@ const updateASR = async body => {
   const BLOB = require('../../../models/Blob');
 
   try {
-    // const { statusName: nameOfStatus } = await findStatusById(status);        
     const { affectionName } = await findImpact(affection);    
     const { moduleName } = await findKLHModuleById(klhModule);
     const { catId, catName } = await findCategories(mainCategory)    
-    // const { catName: subCatName } = subCategory ? await mainCatRouter(catId, subCategory): null;   
-    // const { statusName: closedStatusName } = closedStatus == null ? null : await findCloseStatus(closedStatus);  
 
     const getSubCatName = async (catId, subCategory) => {
       if(subCategory) {
