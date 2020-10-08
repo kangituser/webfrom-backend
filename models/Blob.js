@@ -17,7 +17,7 @@ BLOB.init(
       allowNull: true,
       // references: {
       //   model: ASR,
-      //   key: 'id'
+      //   referenceKey: 'id'
       // }
     },
     blobName: {
@@ -41,7 +41,7 @@ BLOB.init(
   }
 );
 
-// BLOB.belongsTo(ASR, { targetKey: 'id', foreignKey: 'srId'})
+  // BLOB.belongsTo(models.ASR, { targetKey: 'id', foreignKey: 'srId'})
 
 BLOB.sync({ alter: false })
 

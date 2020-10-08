@@ -74,6 +74,7 @@ const remap = async (status, email) => {
       { model: BLOB, attributes: [] },
       { model: CHANGE_LOG, attributes: [] },
       { model: CLOSE_STATUS, attributes: []}
+      
     ] ,raw: true
   });
 

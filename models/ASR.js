@@ -116,21 +116,9 @@ ASR.init(
   }
 );
 
-ASR.associations = models => {
-  ASR.hasOne(models.BLOB, {
-    sourceKey: "id",
-    foreignKey: "srId",
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-  });
-  ASR.hasMany(models.CHANGE_LOG, { sourceKey: "id", foreignKey: "srId" });
-  ASR.hasOne(models.CLOSE_STATUS, {
-    sourceKey: "closeStatusId",
-    foreignKey: "statusId",
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-  });
-};
+  ASR.hasOne(BLOB, { sourceKey: "id", foreignKey: "srId", onDelete: "CASCADE", onUpdate: "CASCADE" });
+  ASR.hasMany(CHANGE_LOG, { sourceKey: "id", foreignKey: "srId" });
+  ASR.hasOne(CLOSE_STATUS, { sourceKey: "closeStatusId", foreignKey: "statusId", onDelete: "CASCADE", onUpdate: "CASCADE", });
 
 ASR.sync({ alter: false });
 
