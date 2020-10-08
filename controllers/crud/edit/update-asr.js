@@ -25,8 +25,8 @@ const updateASR = async body => {
     };
     const getClosedStatusName = async closedStatus => {
       if (closedStatus) {
-        const { statusName: closedStatusName } = await findCloseStatus(closedStatus);  
-        return closedStatusName;
+        const closedStatusObj = await findCloseStatus(closedStatus);  
+        return closedStatusObj.statusName;
       } else {
         return null;
       }
@@ -40,7 +40,6 @@ const updateASR = async body => {
         return null;
       }
     };
-
     
     await ASR.update({ 
       title: title, 

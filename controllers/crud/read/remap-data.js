@@ -31,7 +31,7 @@ const remap = async (status, email) => {
       ["closeStatusName", "closedStatus"],
       ["insert_time", "requestTime"],
       ["closeStatusId","closedStatus"],
-      ["statusName", "statusName"],
+      "mvcCLOSE_STATUS.statusName",
       "dateToIssue",
       "close_time",
       "root_problem",
@@ -58,7 +58,7 @@ const remap = async (status, email) => {
       ["closeStatusName", "closedStatus"],
       ["insert_time", "requestTime"],
       ["closeStatusId","closedStatus"],
-      ["statusName", "statusName"],
+      "mvcCLOSE_STATUS.statusName",
       "dateToIssue",
       "close_time",
       "root_problem",
@@ -73,7 +73,7 @@ const remap = async (status, email) => {
     include: [
       { model: BLOB, attributes: [] },
       { model: CHANGE_LOG, attributes: [] },
-      { model: CLOSE_STATUS, attributes: ['statusName']}
+      { model: CLOSE_STATUS, attributes: []}
     ] ,raw: true
   });
 

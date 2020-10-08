@@ -15,10 +15,10 @@ BLOB.init(
     srId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      references: {
-        model: ASR,
-        key: 'id'
-      }
+      // references: {
+      //   model: ASR,
+      //   key: 'id'
+      // }
     },
     blobName: {
       type: DataTypes.STRING,

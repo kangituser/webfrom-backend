@@ -1,9 +1,9 @@
 const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../util/database");
-const BLOB = require('./Blob');
-const CHANGE_LOG = require('./Change_log');
+const BLOB = require("./Blob");
+const CHANGE_LOG = require("./Change_log");
 const CLOSE_STATUS = require("./close-status");
-  
+
 class ASR extends Model {}
 
 ASR.init(
@@ -14,7 +14,7 @@ ASR.init(
       allowNull: false,
       primaryKey: true,
       // references: {
-      //   model: BLOB, 
+      //   model: BLOB,
       //   key: 'srId',
       // }
     },
@@ -45,7 +45,7 @@ ASR.init(
     insert_time: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-      allowNull: true
+      allowNull: true,
     },
     update_time: {
       type: DataTypes.DATE,
@@ -116,11 +116,22 @@ ASR.init(
   }
 );
 
-ASR.hasOne(BLOB, { sourceKey: 'id', foreignKey: 'srId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-ASR.hasMany(CHANGE_LOG, { sourceKey: 'id', foreignKey: 'srId' })
-ASR.hasOne(CLOSE_STATUS, { sourceKey: 'closedStatusId', foreignKey: 'statusId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
- 
-ASR.sync({ alter: false })
+ASR.associations = models => {
+  ASR.hasOne(models.BLOB, {
+    sourceKey: "id",
+    foreignKey: "srId",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  ASR.hasMany(models.CHANGE_LOG, { sourceKey: "id", foreignKey: "srId" });
+  ASR.hasOne(models.CLOSE_STATUS, {
+    sourceKey: "closeStatusId",
+    foreignKey: "statusId",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+};
 
+ASR.sync({ alter: false });
 
 module.exports = ASR;
