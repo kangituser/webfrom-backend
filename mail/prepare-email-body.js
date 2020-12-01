@@ -2,7 +2,7 @@ const prepareMailBody = (mail, title, output) => {
   let body;
   if (typeof mail == 'string') {
     body = {
-      from: '"Engineering" <engineering@kan.org.il>',
+      from: '"Engineering" <engineering@kan.morg.il>',
       to: mail,
       subject: title,
       html: output,
@@ -10,15 +10,15 @@ const prepareMailBody = (mail, title, output) => {
   } else {
     let to = ''
     if (typeof mail == 'object') {
-      to = mail.shift();    
+      // to = mail.shift();
     }
-    let bcc = mail;
+    // let bcc = mail;
     body = {
-      from: '"Engineering" <engineering@kan.org.il>',
-      to: to,
+      from: '"Engineering" <engineering@kan.morg.il>',
+      to: mail[0],
       subject: title,
       html: output,
-      bcc: bcc
+      bcc: mail.slice(1)
     }
   }
   

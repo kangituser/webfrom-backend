@@ -17,7 +17,7 @@ const userMsgRouter = (data, route, state, pwd) => {
 const userActivated = data => {
   let title = `אישור הרשמה למערכת לניהול קריאות שירות`;
   let mail = data.email;  
-  let ref = '<a href="http://eng.kan.org.il">למערכת</a>';
+  let ref = '<a href="http://eng.kan.morg.il">למערכת</a>';
   let output = `
   <div style="direction: rtl;">
   <p>שלום ${data.name},</p>
@@ -65,7 +65,7 @@ const userPwdUpdateRequest = (data, pwd) => {
 const userAccepted = data => {
   let title = `אישור הרשמה למערכת לניהול קריאות שירות`;
   let mail = data.email;  
-  let ref = '<a href="http://eng.kan.org.il">למערכת</a>';
+  let ref = '<a href="http://eng.kan.morg.il">למערכת</a>';
   let output = `
   <div style="direction: rtl;">
   <p>שלום ${data.name},</p>
@@ -95,7 +95,7 @@ const userWaiting = data => {
 }
 
 const registerRequest = data => {
-  let ref = '<a href="http://eng.kan.org.il">למערכת</a>';
+  let ref = '<a href="http://eng.kan.morg.il">למערכת</a>';
   let title = `משתמש חדש מחכה לאישורך`;
   let admins = data.email;  
   let output = `

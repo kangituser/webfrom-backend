@@ -6,8 +6,7 @@ const CLOSE_STATUS = require("./close-status");
 
 class ASR extends Model {}
 
-ASR.init(
-  {
+ASR.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -117,9 +116,9 @@ ASR.init(
 );
 
   ASR.hasOne(BLOB, { sourceKey: "id", foreignKey: "srId", onDelete: "CASCADE", onUpdate: "CASCADE" });
-  ASR.hasMany(CHANGE_LOG, { sourceKey: "id", foreignKey: "srId" });
   ASR.hasOne(CLOSE_STATUS, { sourceKey: "closeStatusId", foreignKey: "statusId", onDelete: "CASCADE", onUpdate: "CASCADE", });
+  ASR.hasMany(CHANGE_LOG, { sourceKey: "id", foreignKey: "srId" });
 
-ASR.sync({ alter: false });
+ASR.sync({ alter: true });
 
 module.exports = ASR;
