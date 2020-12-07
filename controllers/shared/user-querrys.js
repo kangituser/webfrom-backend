@@ -4,7 +4,7 @@ const findUserByEmail = async email => await USER.findOne({ where: { email: emai
 
 const findSingleUserByEmail = async email => await USER.findOne({ where: { email: email }});
 
-const findUserById = async id => await USER.findOne({ where: { id: id }});
+const findUserById = async id => await USER.findOne({ where: { id: id }, raw: true});
 
 const findUserRoleById = async id => await USER.findOne({ where: { id: id }, attributes: ['role']});
 

@@ -6,7 +6,7 @@ const ASRcreation = async asrToCreate => {
   const { mainCatRouter } = require('../cat-router');
   
   const { klhModule, impact, problemType, problemSubType, title, name, idOpen, email, phone, description } = asrToCreate;
-  const { moduleName } = await findKLHModule(klhModule);
+  const moduleName = await findKLHModule(klhModule);
   const { affectionName } = await findImpact(impact);  
   const { catName } = await findCategories(problemType);      
   const { catName: subCatName } = await mainCatRouter(problemType, problemSubType); 

@@ -117,7 +117,7 @@ ASR.init({
 
   ASR.hasOne(BLOB, { sourceKey: "id", foreignKey: "srId", onDelete: "CASCADE", onUpdate: "CASCADE" });
   ASR.hasOne(CLOSE_STATUS, { sourceKey: "closeStatusId", foreignKey: "statusId", onDelete: "CASCADE", onUpdate: "CASCADE", });
-  ASR.hasMany(CHANGE_LOG, { sourceKey: "id", foreignKey: "srId" });
+  // ASR.hasMany(CHANGE_LOG, { sourceKey: "id", foreignKey: "srId" });
 
 ASR.sync({ alter: true });
 
