@@ -1,9 +1,9 @@
 const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const sequelize = require("../util/database");
 
-class SERVICECATEGORIES extends Model {}
+class SERVICE_CATEGORIES extends Model {}
 
-SERVICECATEGORIES.init(
+SERVICE_CATEGORIES.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -28,4 +28,4 @@ SERVICECATEGORIES.init(
   }
 );
 
-module.exports = SERVICECATEGORIES;
+module.exports = SERVICE_CATEGORIES;

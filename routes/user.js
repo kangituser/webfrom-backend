@@ -1,37 +1,14 @@
-const router = require('express/index').Router();
-const isAuth = require('../middleware/is-auth');
+const user = require('../controllers/user');
+const userController = require('../controllers/user');
 
-// Auth
-const { Login } = require('../controllers/auth/login/login');
-const { Register } = require('../controllers/auth/register/register');
+module.exports = router => {
+  router.get("/all", userController.getAll);
 
-// User
-const { Update: UpdateUser } = require('../controllers/user/edit/update-user');
-const { GetRole } = require('../controllers/user/user-role');
-const { GetAll } = require('../controllers/user/get-all');
-const { Delete } = require('../controllers/user/delete-user');
+  router.post("/delete", userController.deleteUser);
 
-// Pwd
-const { Update: UpdatePWD } = require('../controllers/password/update');
-const { Generate } = require('../controllers/password/generate');
-const { Reset } = require('../controllers/password/reset');
+  router.put("/update", userController.updateUser);
 
-router.post('/auth/login', Login); 
+  router.get("/role", userController.getRole);
 
-router.post('/auth/register', Register);
-
-router.put('/password/update', isAuth, UpdatePWD);
-
-router.post('/password/key', Generate);
-
-router.post('/password/reset', Reset);
-
-router.get('/all', isAuth, GetAll);
-
-router.post('/delete', isAuth, Delete);
-
-router.put('/update', isAuth, UpdateUser);
-
-router.get('/role', isAuth, GetRole);
-
-module.exports = router;
+  return router;
+};

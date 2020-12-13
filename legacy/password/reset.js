@@ -1,9 +1,9 @@
 const Reset = async (req, res) => {
     const { messageRoutelet } = require('../../mail/massage-routelet');
-    const { responseHandler } = require('../shared/response-handler');
-    const { findSingleUserByEmail } = require('../shared/user-querrys');
-    const { hashPassword } = require('../shared/pwd-querrys')
-    const { findUnexpiredTokenByEmail } = require('../shared/pwd-token-querrys');
+    const { responseHandler } = require('../../controllers/shared/response-handler');
+    const { findSingleUserByEmail } = require('../../controllers/shared/user-querrys');
+    const { hashPassword } = require('../../controllers/shared/pwd-querrys')
+    const { findUnexpiredTokenByEmail } = require('../../controllers/shared/pwd-token-querrys');
     const { email, password: pwd, token } = req.body;
     const { originalUrl: route } = req;
     
@@ -17,7 +17,7 @@ const Reset = async (req, res) => {
           user.password = hash;
           await user.save();
   
-          messageRoutelet({ name: user.fullName, email: user.email }, route, pwd, 'success');
+          messageRoutelet({ name: user.fullName, email: [user.email] }, route, pwd, 'success');
           responseHandler(res, 201, { message: 'password updated' })
         } else {
           responseHandler(res, 422, { message: 'could not update password with this token' })

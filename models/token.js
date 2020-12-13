@@ -1,10 +1,9 @@
 const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const sequelize = require("../util/database");
 
 class TOKEN extends Model {}
 
-TOKEN.init(
-  {
+TOKEN.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -24,12 +23,13 @@ TOKEN.init(
       allowNull: true,
     },
   },
-  {
+  { 
     sequelize,
     modelName: "mvcTOKEN",
     timestamps: false,
     freezeTableName: true,
-  }
-);
+  });
+
+  TOKEN.sync();
 
 module.exports = TOKEN;

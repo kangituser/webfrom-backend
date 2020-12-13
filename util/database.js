@@ -1,11 +1,9 @@
 const Sequelize = require('sequelize/index').Sequelize;
 
-const sequelize = new Sequelize(
-  process.env.DATABASE,
-  process.env.DATABASE_USER,
-  process.env.DATABASE_PASSWORD,
-  {
-    host: process.env.DATABASE_HOST,
+const { DATABASE, DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST } = process.env;
+
+const sequelize = new Sequelize(DATABASE, DATABASE_USER, DATABASE_PASSWORD, {
+    host: DATABASE_HOST,
     dialect: 'mssql',
     dialectOptions: {
       options: {
@@ -16,8 +14,8 @@ const sequelize = new Sequelize(
         enableArithAbort: true,
       },
     },
+    logging: false,
     timezone: '+03:00'
-  }
-);
+  });
 
-module.exports = { sequelize };
+module.exports = sequelize;

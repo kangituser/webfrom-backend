@@ -12,7 +12,7 @@ const sendASRDeitedMail = async (updatedASR, authUser, ASRtoUpdate, isChanged, r
   if (authUser.email != email_open) {
     emails = [email_open, authUser.email];
   } else {
-    emails = email_open;
+    emails = [email_open];
   }
 
   console.log(email_open)

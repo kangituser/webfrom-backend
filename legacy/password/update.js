@@ -1,9 +1,9 @@
 const Update = async (req, res) => {
   
-  const { responseHandler } = require("../shared/response-handler");
+  const { responseHandler } = require("../../controllers/shared/response-handler");
   const { messageRoutelet } = require("../../mail/massage-routelet");
-  const { findUserById } = require("../shared/user-querrys");
-  const { hashPassword } = require('../shared/pwd-querrys')
+  const { findUserById } = require("../../controllers/shared/user-querrys");
+  const { hashPassword } = require('../../controllers/shared/pwd-querrys')
   
   const { password, id: userId } = req.body;
   const { id, originalUrl } = req;
@@ -19,7 +19,7 @@ const Update = async (req, res) => {
         user.password = hash;
         await user.save();
 
-        messageRoutelet({ name: user.fullName, email: user.email }, originalUrl, password, "success");
+        messageRoutelet({ name: user.fullName, email: [user.email] }, originalUrl, password, "success");
         responseHandler(res, 201, { message: "password was successfully updated" });
       } else {
         responseHandler(res, 404, { message: "used does not exist" });

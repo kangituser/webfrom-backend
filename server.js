@@ -1,36 +1,34 @@
 if (process.env.NODE_ENV == "development") {
+  require("dotenv/config");
 }
-require("dotenv/config");
 
-const express = require("express");
-const { json } = require('express');
+const middleware = require("./middleware/index.js");
+const db = require("./util/database");
 const PORT = process.env.PORT || 8080;
 
-const { sequelize } = require("./util/database");
-
-const UserRoutes = require("./routes/user");
-const SRRoutes = require("./routes/service-request");
-
+const express = require("express");
 const app = express();
 
-app.use(json());
+const { isAuth } = require('./middleware/index');
 
-app.use("/user", UserRoutes);
-app.use("/service-request", SRRoutes);
+const authRouter = require('./routes/auth')(express.Router());
+const passwordRouter = require('./routes/password')(express.Router());
+const userRouter = require("./routes/user")(express.Router());
+const serviceRequestRouter = require("./routes/service-request")(express.Router());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", `POST ,GET ,OPTIONS, PUT, PATCH, DELETE`);
-  res.setHeader("Access-Control-Allow-Headers", `Content-Type , Authorization ,Cache-Control, multipart/form-data , application/json ,text/plain, text/html`);
-  if (req.method == "OPTIONS") {
-    return res.status(200);
-  }
-  next();
-});
+app.use(middleware.cors);
+app.use(express.json());
 
-sequelize.sync({ alter: true })
-// sequelize.sync({ force: true })
-.then(() => {
-    app.listen(PORT, console.log(`started server on port ${PORT}`));
-     console.log(`connected to ${process.env.DATABASE}`);
-}).catch((err) => console.log(err));
+app.use("/auth", authRouter);
+app.use("/password", passwordRouter);
+app.use(isAuth);
+app.use("/service-request", serviceRequestRouter);
+app.use("/user", userRouter);
+
+app.use(middleware._error);
+
+
+db.sync({ alter: true }).then(() => {
+  app.listen(PORT, console.log(`started server on port ${PORT}`));
+  console.log(`connected to ${process.env.DATABASE}`);
+}).catch(err => console.log(err));

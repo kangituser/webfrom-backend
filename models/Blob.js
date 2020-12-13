@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const sequelize = require("../util/database");
 const ASR = require('./ASR');
 
 class BLOB extends Model {}

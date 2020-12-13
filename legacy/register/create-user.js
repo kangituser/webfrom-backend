@@ -1,6 +1,6 @@
 
 const createUser = async (hash, user) => {
-  const USER = require('../../../models/user');
+  const USER = require('../../models/user');
     
     const { cellHandler } = require('./user-cell-handler');  
     const { email, fullName, phoneNumber } = user;

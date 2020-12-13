@@ -1,12 +1,11 @@
 const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const sequelize = require("../util/database");
 const ASR = require('./ASR');
 const { associations } = require("./user");
  
 class CHANGE_LOG extends Model {}
 
-CHANGE_LOG.init(
-  {
+CHANGE_LOG.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,

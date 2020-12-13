@@ -1,14 +1,14 @@
-const SR_CAT = require('../../models/sr_categories');
-const MAL_CAT = require('../../models/malfunction_categories');
+const SERVICE_CATEGORIES = require('../../models/sr_categories');
+const MALFUNCTION_CATEGORIES = require('../../models/malfunction_categories');
 
 const mainCatRouter = async (main, cat) => {  
   console.log(cat);
   
     switch (main) {
       case 3:
-        return await mapper(cat, SR_CAT);
+        return await mapper(cat, SERVICE_CATEGORIES);
       case 4:        
-        return await mapper(cat, MAL_CAT);
+        return await mapper(cat, MALFUNCTION_CATEGORIES);
       default:
         return ' ';
       }

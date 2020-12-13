@@ -1,10 +1,9 @@
 const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const sequelize = require("../util/database");
 
-class MALFUNCTIONCATEGORIES extends Model {}
+class MALFUNCTION_CATEGORIES extends Model {}
 
-MALFUNCTIONCATEGORIES.init(
-  {
+MALFUNCTION_CATEGORIES.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -28,4 +27,4 @@ MALFUNCTIONCATEGORIES.init(
   }
 );
 
-module.exports = MALFUNCTIONCATEGORIES;
+module.exports = MALFUNCTION_CATEGORIES;

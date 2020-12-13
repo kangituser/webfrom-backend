@@ -1,6 +1,6 @@
 const prepareMailBody = (mail, title, output) => {
   let body;
-  if (typeof mail == 'string') {
+  if (mail.length === 0) {
     body = {
       from: '"Engineering" <engineering@kan.org.il>',
       to: mail,
@@ -12,7 +12,7 @@ const prepareMailBody = (mail, title, output) => {
     if (typeof mail == 'object') {
       // to = mail.shift();
     }
-    mail.push('jonathana@kan.org.il');
+    // mail.push('jonathana@kan.org.il');
     body = {
       from: '"Engineering" <engineering@kan.org.il>',
       to: mail[0],

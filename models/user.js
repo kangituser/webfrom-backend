@@ -1,10 +1,9 @@
 const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const sequelize = require("../util/database");
 
 class USER extends Model {}
 
-USER.init(
-  {
+USER.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,

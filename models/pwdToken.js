@@ -1,10 +1,9 @@
 const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const sequelize = require("../util/database");
 
 class PWDTOKEN extends Model {}
 
-PWDTOKEN.init(
-  {
+PWDTOKEN.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,

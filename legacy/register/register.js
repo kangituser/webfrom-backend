@@ -1,12 +1,12 @@
 
 const Register = async (req, res, next) => {  
    
-    const { findUserByEmail, findAllAdmins } = require('../../shared/user-querrys');
-    const { messageRoutelet } = require('../../../mail/massage-routelet');
-    const { responseHandler } = require('../../shared/response-handler');
-    const { tokenGenerator } = require('../../shared/token-generator');
-    const { hashPassword } = require('../../shared/pwd-querrys');
-    const { cerateToken } = require('../../shared/token-querrys');
+    const { findUserByEmail, findAllAdmins } = require('../../controllers/shared/user-querrys');
+    const { messageRoutelet } = require('../../mail/massage-routelet');
+    const { responseHandler } = require('../../controllers/shared/response-handler');
+    const { tokenGenerator } = require('../../controllers/shared/token-generator');
+    const { hashPassword } = require('../../controllers/shared/pwd-querrys');
+    const { cerateToken } = require('../../controllers/shared/token-querrys');
     const { createUser } = require('./create-user');
     const { password, email } = req.body;
     const { originalUrl } = req;

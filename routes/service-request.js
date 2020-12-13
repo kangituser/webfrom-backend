@@ -1,22 +1,20 @@
-const router = require('express/index').Router();
+const { createASRequest } = require("../controllers/crud/create/create-asr-request");
+const { editASR } = require("../controllers/crud/edit/edit");
+const { deleteASR } = require("../controllers/crud/delete/delete");
 
-const isAuth = require('../middleware/is-auth');
+const serviceRequestController = require('../controllers/service-request');
 
-const { findAllOpenASR } = require('../controllers/crud/read/get-open-sr');
-const { findAllClosedASR } = require('../controllers/crud/read/get-closed-sr');
+module.exports = router => {
 
-const { createASRequest } = require('../controllers/crud/create/create-asr-request');
-const { editASR } = require('../controllers/crud/edit/edit');
-const { deleteASR } = require('../controllers/crud/delete/delete');
+  router.get("/all/open", serviceRequestController.getAllOpen);
 
-router.get('/all/open', isAuth, findAllOpenASR);
+  router.get("/all/closed", serviceRequestController.getAllClosed);
 
-router.get('/all/closed', isAuth, findAllClosedASR);
+  router.post("/create", serviceRequestController.create);
 
-router.post('/create', isAuth, createASRequest)
+  router.put("/edit", editASR);
 
-router.put('/edit', isAuth, editASR);
+  router.post("/delete", serviceRequestController.delete);
 
-router.post('/delete',isAuth, deleteASR);
-
-module.exports = router;
+  return router;
+};
