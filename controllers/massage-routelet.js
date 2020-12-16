@@ -5,7 +5,7 @@ const enums = require('./mail/states');
 const user = require('./mail/user');
 const serviceRequest = require("./mail/sr");
 
-const headers = { 'Content-Type': 'application/json' };
+const headers = { 'Content-Type': 'text/plain' };
 
 module.exports = async (data, route, state) => {
   try {
