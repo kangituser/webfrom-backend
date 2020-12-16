@@ -7,7 +7,7 @@ module.exports = {
     try {
       return await USER.findOne({ where: { email } });
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
@@ -18,7 +18,7 @@ module.exports = {
         attributes: ["expirationDate"],
       });
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
@@ -32,22 +32,22 @@ module.exports = {
 
       return admins.map(admin => admin.email);
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
-  createUser: async (hash, user) => {
+  createUser: async (password, { email, fullName, phoneNumber }) => {
     try {
       return await USER.create({
-        email: user.email,
-        password: hash,
-        fullName: user.fullName,
+        email,
+        password,
+        fullName,
         isActive: 0,
         role: 3,
-        phoneNumber: cell(user.phoneNumber),
+        phoneNumber: cell(phoneNumber),
       });
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 };

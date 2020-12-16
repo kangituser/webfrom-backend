@@ -1,30 +1,23 @@
-const { DataTypes, Model } = require("sequelize");
-const sequelize = require("../util/database");
+const { Model, INTEGER, STRING } = require("sequelize");
 
 class MALFUNCTION_CATEGORIES extends Model {}
+const options = require('./Utils/model-options')("mvcMALFUNCTION_CATEGORIES");
 
 MALFUNCTION_CATEGORIES.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     catId: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     catName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcMALFUNCTION_CATEGORIES",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
 module.exports = MALFUNCTION_CATEGORIES;

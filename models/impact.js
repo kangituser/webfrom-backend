@@ -1,31 +1,24 @@
-const { DataTypes, Model } = require("sequelize");
-const sequelize = require("../util/database");
+const { Model, INTEGER, STRING } = require("sequelize");
 
 class IMPACT extends Model {}
+const options = require('./Utils/model-options')("mvcIMPACT");
 
 IMPACT.init(
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     catId: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     affectionName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcIMPACT",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
 module.exports = IMPACT;

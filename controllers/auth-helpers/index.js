@@ -10,7 +10,7 @@ const {
 const {
   findTokenByUserEmail,
   findUserByEmail,
-  findAllAdminEmails,
+  findAllAdmins,
   createUser
 } = require("./queries");
 
@@ -23,6 +23,6 @@ module.exports = {
   cerateToken,
   findUserByEmail,
   findTokenByUserEmail,
-  findAllAdminEmails,
+  findAllAdmins,
   createUser
 };

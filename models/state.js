@@ -1,38 +1,33 @@
-const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../util/database');
+const { Model, NOW, INTEGER, STRING, DATE } = require('sequelize');
 
 class STATE extends Model {}
+const options = require('./Utils/model-options')("mvcSTATE");
 
 STATE.init({
   id: {
-    type: DataTypes.INTEGER,
+    type: INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
   },
   srId: {
-    type: DataTypes.INTEGER,
+    type: INTEGER,
     allowNull: true,
   },
   syncStatus: {
-    type: DataTypes.INTEGER,
+    type: INTEGER,
     allowNull: true,
   },
   syncStatusName: {
-    type: DataTypes.STRING,
+    type: STRING,
     allowNull: true,
   },
   syncUpdated: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DATE,
+    defaultValue: NOW,
     allowNull: true,
   }
-}, { 
-  sequelize,
-  modelName: 'mvcSTATE',
-  timestamps: false, 
-  freezeTableName: true,
-})
+}, options);
 
 // STATE.sync({ alter: true })
 

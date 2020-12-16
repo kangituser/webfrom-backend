@@ -3,7 +3,7 @@ if (process.env.NODE_ENV == "development") {
 }
 
 const middleware = require("./middleware/index.js");
-const db = require("./util/database");
+const db = require("./models/Utils/database");
 const PORT = process.env.PORT || 8080;
 
 const express = require("express");
@@ -19,8 +19,8 @@ const serviceRequestRouter = require("./routes/service-request")(express.Router(
 app.use(middleware.cors);
 app.use(express.json());
 
-app.use("/auth", authRouter);
-app.use("/password", passwordRouter);
+app.use("/user/auth", authRouter);
+app.use("/user/password", passwordRouter);
 app.use(isAuth);
 app.use("/service-request", serviceRequestRouter);
 app.use("/user", userRouter);
@@ -28,7 +28,7 @@ app.use("/user", userRouter);
 app.use(middleware._error);
 
 
-db.sync({ alter: true }).then(() => {
+db.sync({ alter: false }).then(() => {
   app.listen(PORT, console.log(`started server on port ${PORT}`));
   console.log(`connected to ${process.env.DATABASE}`);
 }).catch(err => console.log(err));

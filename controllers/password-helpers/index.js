@@ -1,4 +1,6 @@
 const {
+  findUserRoleById,
+  findUserEmailById,
   findUserById,
   updateUserPassword,
   findUnexpiredTokenByEmail,
@@ -8,6 +10,8 @@ const {
 } = require("./queries");
 
 module.exports = {
+  findUserRoleById,
+  findUserEmailById,
   findUserById,
   updateUserPassword,
   findUnexpiredTokenByEmail,

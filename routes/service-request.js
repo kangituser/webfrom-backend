@@ -1,7 +1,3 @@
-const { createASRequest } = require("../controllers/crud/create/create-asr-request");
-const { editASR } = require("../controllers/crud/edit/edit");
-const { deleteASR } = require("../controllers/crud/delete/delete");
-
 const serviceRequestController = require('../controllers/service-request');
 
 module.exports = router => {
@@ -12,7 +8,7 @@ module.exports = router => {
 
   router.post("/create", serviceRequestController.create);
 
-  router.put("/edit", editASR);
+  router.put("/edit", serviceRequestController.edit);
 
   router.post("/delete", serviceRequestController.delete);
 

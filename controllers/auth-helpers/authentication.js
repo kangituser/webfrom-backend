@@ -10,7 +10,7 @@ module.exports = {
     try {
       return await bcrypt.compare(inputPwd, storedPwd);
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
@@ -20,7 +20,7 @@ module.exports = {
     try {
       return await bcrypt.hash(password, 12);
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
@@ -28,7 +28,7 @@ module.exports = {
     try {
       return await new TokenGenerator(256, TokenGenerator.BASE62).generate();
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
@@ -38,7 +38,7 @@ module.exports = {
     try {
       return await TOKEN.create({ token, expirationDate, userEmail });
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 };

@@ -3,7 +3,6 @@ const remap = require("./remap-data");
 const {
   setStateToDelete,
   updateStateToDelete,
-  findStateById,
   deleteServiceRequest,
 } = require("./delete");
 
@@ -11,24 +10,53 @@ const {
   setStateToCreate,
   createBlob,
   mapServiceRequest,
-  findKLHUsers,
+  findKLHEmails,
   createServiceRequest,
 } = require("./create");
 
-const { findCategories, findImpact, findKLHModule } = require("./queries");
+const {
+  setStateToEdit,
+  updateStatetoError,
+  updateStateToEdit,
+  findServiceRequestById,
+  getSubCategoryName,
+  getStatusName,
+  getCloseStatus,
+  sendToLog,
+  sendServiceRequestEditedEmail,
+} = require("./edit");
+
+const updateServiceRequest = require("./main-edit");
+
+const {
+  findCategories,
+  findImpact,
+  findStateById,
+  findKLHModule,
+} = require("./queries");
 
 module.exports = {
+  findCategories,
+  findImpact,
+  findStateById,
+  findKLHModule,
   remap,
   setStateToDelete,
   updateStateToDelete,
-  findStateById,
   deleteServiceRequest,
   setStateToCreate,
   createBlob,
   mapServiceRequest,
-  findKLHUsers,
+  findKLHEmails,
   createServiceRequest,
-  findCategories,
-  findImpact,
-  findKLHModule,
+  setStateToEdit,
+  updateStatetoError,
+  updateStateToEdit,
+  findServiceRequestById,
+  updateServiceRequest,
+  getSubCategoryName,
+  getStatusName,
+  getCloseStatus,
+  sendToLog,
+  sendServiceRequestEditedEmail,
 };

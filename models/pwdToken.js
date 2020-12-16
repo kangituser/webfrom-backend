@@ -1,35 +1,28 @@
-const { DataTypes, Model } = require("sequelize");
-const sequelize = require("../util/database");
+const { Model, INTEGER, STRING, DATE } = require("sequelize");
 
 class PWDTOKEN extends Model {}
+const options = require('./Utils/model-options')("mvcPWD_TOKEN");
 
 PWDTOKEN.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     token: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     expirationDate: {
-      type: DataTypes.DATE,
+      type: DATE,
       allowNull: true,
     },
     userEmail: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcPWD_TOKEN",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
 // PWDTOKEN.sync({ force: true});
 

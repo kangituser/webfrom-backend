@@ -1,34 +1,26 @@
-const { DataTypes, Model } = require("sequelize");
-const sequelize = require("../util/database");
+const { Model, INTEGER, STRING } = require("sequelize");
 
 class CLOSE_STATUS extends Model {}
+const options = require('./Utils/model-options')("mvcCLOSE_STATUS");
 
-CLOSE_STATUS.init(
-  {
+CLOSE_STATUS.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     statusId: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     statusName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcCLOSE_STATUS",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
 // CLOSE_STATUS.sync({ alter: true });
-CLOSE_STATUS.sync();
+// CLOSE_STATUS.sync();
 
 module.exports = CLOSE_STATUS;

@@ -1,9 +1,11 @@
+const ASR = require("../../models/ASR");
 const BLOB = require("../../models/Blob");
 const STATE = require("../../models/state");
-const categoryRouter = require("./category-router");
-const mainCatRouter = require('./category-router');
+const USER = require("../../models/user");
 
-const _serviceRequest = require('./index');
+const categoryRouter = require("./category-router");
+const _queries = require('./queries');
+
 
 module.exports = {
   setStateToCreate: async srId => {
@@ -35,8 +37,8 @@ module.exports = {
   mapServiceRequest: (sr, idOpen, authUser) => {
     try {
       return {
-        problemType: mainCategory,
-        problemSubType: subCategory,
+        problemType: sr.mainCategory,
+        problemSubType: sr.subCategory,
         title: sr.title,
         name: authUser.fullName,
         email: authUser.email,
@@ -53,9 +55,10 @@ module.exports = {
     }
   },
 
-  findKLHUsers: async role => {
+  findKLHEmails: async role => {
     try {
-      return await USER.findAll({ where: { role }, raw: true})  
+      let emails = await USER.findAll({ where: { role }, attributes: ['email'], raw: true })  
+      return emails.map(klh => klh.email);
     } catch (err) {
       throw err;
     }
@@ -63,9 +66,9 @@ module.exports = {
 
   createServiceRequest: async sr => {
     try {
-      const moduleName = await _serviceRequest.findKLHModule(sr.klhModule);
-      const { affectionName } = await _serviceRequest.findImpact(sr.impact);
-      const { catName } = await _serviceRequest.findCategories(sr.problemType);
+      const module_klh_name = await _queries.findKLHModule(sr.klhModule);
+      const impact_name = await _queries.findImpact(sr.impact);
+      const { catName } = await _queries.findCategories(sr.problemType);
       const { catName: subCatName } = await categoryRouter(sr.problemType, sr.problemSubType);
 
       return await ASR.create({
@@ -78,9 +81,9 @@ module.exports = {
         phone_open: sr.phone,
         description: sr.description,
         impact: sr.impact,
-        impact_name: affectionName,
-        sr_cust_module: klhModule,
-        module_klh_name: moduleName,
+        impact_name,
+        sr_cust_module: sr.klhModule,
+        module_klh_name,
         status: 1,
         insert_time: new Date(),
         status_name: 'חדש',

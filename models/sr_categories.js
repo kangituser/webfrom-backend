@@ -1,31 +1,24 @@
-const { DataTypes, Model } = require("sequelize");
-const sequelize = require("../util/database");
+const { Model, INTEGER, STRING } = require("sequelize");
 
 class SERVICE_CATEGORIES extends Model {}
+const options = require('./Utils/model-options')("mvcSR_CATEGORIES");
 
 SERVICE_CATEGORIES.init(
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     catId: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     catName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcSR_CATEGORIES",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
 module.exports = SERVICE_CATEGORIES;

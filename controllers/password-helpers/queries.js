@@ -5,9 +5,37 @@ const USER = require("../../models/user");
 module.exports = {
   findUserById: async id => {
     try {
-      return await USER.findOne({ where: { id }, raw: true });
+      return await USER.findOne({
+        where: { id },
+        raw: true,
+      });
     } catch (err) {
-      next(err);
+      throw err;
+    }
+  },
+
+  findUserRoleById: async id => {
+    try {
+      return await USER.findOne({
+        where: { id },
+        attributes: ["role"],
+        raw: true,
+      });
+    } catch (err) {
+      throw err;
+    }
+  },
+  
+  findUserEmailById: async id => {
+    try {
+      let email = await USER.findOne({
+        where: { id },
+        attributes: ["email"],
+        raw: true,
+      });
+      return email ? email : null;
+    } catch (err) {
+      throw err;
     }
   },
 
@@ -15,7 +43,7 @@ module.exports = {
     try {
       await USER.update({ password: hash }, { where: { id } });
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
@@ -25,7 +53,7 @@ module.exports = {
         where: { userEmail, expirationDate: { [Op.gte]: new Date() } },
       });
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
@@ -33,15 +61,15 @@ module.exports = {
     try {
       return new Date().setMinutes(new Date().getMinutes() + 30);
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
   findPWDTokenByEmail: async userEmail => {
     try {
-      return await PWDTOKEN.findOne({ where: { userEmail } });
+      return await PWDTOKEN.findOne({ where: { userEmail }, raw: true });
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
@@ -49,18 +77,15 @@ module.exports = {
     try {
       return await PWDTOKEN.create({ token, expirationDate, userEmail });
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 
   updatePWDToken: async (id, token, expirationDate, userEmail) => {
     try {
-      return await PWDTOKEN.update(
-        { token, expirationDate, userEmail },
-        { where: { id } }
-      );
+      return await PWDTOKEN.update({ token, expirationDate, userEmail }, { where: { id } });
     } catch (err) {
-      next(err);
+      throw err;
     }
   },
 };

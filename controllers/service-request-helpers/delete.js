@@ -18,15 +18,7 @@ module.exports = {
 
   updateStateToDelete: async id => {
     try {
-      await STATE.update({ syncStatus: 4, syncStatusName: "delete" }, { id });
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  findStateById: async srId => {
-    try {
-      return await STATE.findOne({ where: { srId } });
+      await STATE.update({ syncStatus: 4, syncStatusName: "delete" }, { where: { id }});
     } catch (err) {
       throw err;
     }

@@ -1,4 +1,3 @@
-const user = require('../controllers/user');
 const userController = require('../controllers/user');
 
 module.exports = router => {
