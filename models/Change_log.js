@@ -1,20 +1,17 @@
-const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
-const ASR = require('./ASR');
-const { associations } = require("./user");
+const { Model, INTEGER, STRING, DATE, NOW } = require("sequelize");
  
 class CHANGE_LOG extends Model {}
+const options = require('./Utils/model-options')("mvcCHANGE_LOG");
 
-CHANGE_LOG.init(
-  {
+CHANGE_LOG.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     srId: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
       // references: {
       //   model: ASR,
@@ -22,33 +19,26 @@ CHANGE_LOG.init(
       // }
     },
     old_value: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     new_value: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     edited_by: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     date_edited: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      type: DATE,
+      defaultValue: NOW,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcCHANGE_LOG",
-    timestamps: false,
-    freezeTableName: true, 
-  }
-);
+  }, options);
 
 // CHANGE_LOG.belongsTo(ASR, { targetKey: 'id', foreignKey: 'srId'})
 
-CHANGE_LOG.sync({ alter: false })
+// CHANGE_LOG.sync({ alter: false })
 
 module.exports = CHANGE_LOG;

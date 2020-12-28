@@ -1,125 +1,113 @@
-const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const { Model, INTEGER, STRING, NOW, TEXT, DATE } = require("sequelize");
 const BLOB = require("./Blob");
 const CHANGE_LOG = require("./Change_log");
 const CLOSE_STATUS = require("./close-status");
 
 class ASR extends Model {}
+const options = require('./Utils/model-options')("mvcASR")
 
-ASR.init(
-  {
+ASR.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
-      // references: {
-      //   model: BLOB,
-      //   key: 'srId',
-      // }
     },
     problem_type: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     problem_sub_type: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     title: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     description: {
-      type: DataTypes.TEXT,
+      type: TEXT,
       allowNull: true,
     },
     status: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     status_name: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     insert_time: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      type: DATE,
+      defaultValue: NOW,
       allowNull: true,
     },
     update_time: {
-      type: DataTypes.DATE,
+      type: DATE,
       allowNull: true,
     },
     close_time: {
-      type: DataTypes.DATE,
+      type: DATE,
       allowNull: true,
     },
     sr_cust_module: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     module_klh_name: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     impact: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     impact_name: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     name_open: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     phone_open: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     email_open: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     id_open: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     dateToIssue: {
-      type: DataTypes.DATE,
+      type: DATE,
       allowNull: true,
     },
     solution: {
-      type: DataTypes.TEXT,
+      type: TEXT,
       allowNull: true,
     },
     root_problem: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     closeStatusId: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     closeStatusName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcASR",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
   ASR.hasOne(BLOB, { sourceKey: "id", foreignKey: "srId", onDelete: "CASCADE", onUpdate: "CASCADE" });
-  ASR.hasMany(CHANGE_LOG, { sourceKey: "id", foreignKey: "srId" });
-  ASR.hasOne(CLOSE_STATUS, { sourceKey: "closeStatusId", foreignKey: "statusId", onDelete: "CASCADE", onUpdate: "CASCADE", });
+  ASR.hasOne(CLOSE_STATUS, { sourceKey: "closeStatusId", foreignKey: "statusId", constraints: false });
+  ASR.hasMany(CHANGE_LOG, { sourceKey: "id", foreignKey: "srId", constraints: false });
 
-ASR.sync({ alter: false });
+// ASR.sync({ alter: true });
 
 module.exports = ASR;

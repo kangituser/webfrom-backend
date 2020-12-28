@@ -1,26 +1,23 @@
-const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const { Model, INTEGER, STRING } = require("sequelize");
 
 class STATUS extends Model {}
+const options = require('./Utils/model-options')("mvcSTATUS");
 
 STATUS.init({
   id: {
-    type: DataTypes.INTEGER,
+    type: INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
   statusId: {
-    type: DataTypes.INTEGER,
+    type: INTEGER,
     allowNull: true,
   },
   statusName: {
-    type: DataTypes.STRING,
+    type: STRING,
     allowNull: true,
   }
-}, { sequelize,
-  modelName: "mvcSTATUS",
-  timestamps: false,
-  freezeTableName: true, })
+}, options)
 
 module.exports = STATUS;

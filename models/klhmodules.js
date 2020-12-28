@@ -1,31 +1,24 @@
-const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const { Model, INTEGER, STRING } = require("sequelize");
 
-class KLHMODULES extends Model {}
+class KLH_MODULES extends Model {}
+const options = require('./Utils/model-options')("mvcKLH_MODULES");
 
-KLHMODULES.init(
+KLH_MODULES.init(
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     moduleId: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     moduleName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcKLH_MODULES",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
-module.exports = KLHMODULES;
+module.exports = KLH_MODULES;

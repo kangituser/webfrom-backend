@@ -1,31 +1,23 @@
-const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const { STRING, INTEGER, Model } = require("sequelize");
 
 class BLOB_SERVERS extends Model {}
+const options = require("./Utils/model-options")("mvcBLOB_SERVERS");
 
-BLOB_SERVERS.init(
-  {
+BLOB_SERVERS.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     serverName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     serverUrl: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcBLOB_SERVERS",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
 module.exports = BLOB_SERVERS;

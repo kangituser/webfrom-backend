@@ -1,19 +1,18 @@
-const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
-const ASR = require('./ASR');
+const { INTEGER, STRING, Model } = require("sequelize");
+// const ASR = require('./ASR');
 
 class BLOB extends Model {}
+const options = require('./Utils/model-options')("mvcBLOB");
 
-BLOB.init(
-  {
+BLOB.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     srId: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
       // references: {
       //   model: ASR,
@@ -21,28 +20,21 @@ BLOB.init(
       // }
     },
     blobName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     containerName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     blobServer: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcBLOB",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
   // BLOB.belongsTo(models.ASR, { targetKey: 'id', foreignKey: 'srId'})
 
-BLOB.sync({ alter: false })
+// BLOB.sync({ alter: false })
 
 module.exports = BLOB;

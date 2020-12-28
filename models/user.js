@@ -1,47 +1,39 @@
-const { DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../util/database");
+const { Model, INTEGER, STRING, BOOLEAN } = require("sequelize");
 
 class USER extends Model {}
+const options = require('./Utils/model-options')("mvcUSER");
 
-USER.init(
-  {
+USER.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
     email: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: false,
     },
     password: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     fullName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
     isActive: {
-      type: DataTypes.BOOLEAN,
+      type: BOOLEAN,
       allowNull: true,
     },
     role: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: true,
     },
     phoneNumber: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: true,
     },
-  },
-  {
-    sequelize,
-    modelName: "mvcUSER",
-    timestamps: false,
-    freezeTableName: true,
-  }
-);
+  }, options);
 
 module.exports = USER;
