@@ -69,8 +69,6 @@ module.exports = async (status, email_open) => {
       raw: true,
     });
 
-    console.log(serviceReq);
-
     serviceReq.map(sr => {
       sr.requestTime = formatDate(sr.requestTime);
       sr.dateToIssue = formatDate(sr.dateToIssue);
