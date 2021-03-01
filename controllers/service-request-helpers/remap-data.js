@@ -8,10 +8,8 @@ const CLOSE_STATUS = require("../../models/close-status");
 module.exports = async (status, email_open) => {
   try {
     let serviceReq;
-    let query = email_open ? { status, email_open } : { status };
-
     serviceReq = await ASR.findAll({
-      where: query,
+      where: email_open ? { status, email_open } : { status },
       order: [["id", "DESC"]],
       attributes: [
         ["id", "srId"],
@@ -70,6 +68,8 @@ module.exports = async (status, email_open) => {
       ],
       raw: true,
     });
+
+    console.log(serviceReq);
 
     serviceReq.map(sr => {
       sr.requestTime = formatDate(sr.requestTime);

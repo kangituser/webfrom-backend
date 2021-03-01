@@ -34,12 +34,12 @@ module.exports = {
       const status = 3;
       const roles = [1, 2, -1];
 
-      const email = await _pwd.findUserEmailById(id);
+      const { email } = await _pwd.findUserEmailById(id);
 
-      const role = await _user.getUserRole(id);
-
-      if (!roles.includes(role)) {
-        serviceReq = await _serviceRequest.remap(status, email.email);
+      const { userRole } = await _user.getUserRole(id);
+      
+      if (!roles.includes(userRole)) {
+        serviceReq = await _serviceRequest.remap(status, email);
       } else {
         serviceReq = await _serviceRequest.remap(status);
       }
