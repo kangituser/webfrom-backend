@@ -10,6 +10,7 @@ module.exports = {
       const { password, id: userId } = req.body;
       const { id, originalUrl } = req;
       const user = await _pwd.findUserById(id);
+      const updatedUser = await _pwd.findUserById(userId);
 
       if (!user) {
         return res.status(404).send({ message: "used does not exist" });
@@ -21,10 +22,10 @@ module.exports = {
 
       // update the user
       const hash = await _auth.hashPassword(password);
-      await _pwd.updateUserPassword(hash, id);
+      await _pwd.updateUserPassword(hash, userId);
 
       // send email for updating user
-      sendEmail({ name: user.fullName, email: [user.email] }, enums.PASSWORD, enums.passwordUpdate);
+      sendEmail({ name: updatedUser.fullName, email: [updatedUser.email] }, enums.PASSWORD, enums.passwordUpdate);
       return res.status(201).send({ message: "password was successfully updated" });
     } catch (err) {
       next(err);
