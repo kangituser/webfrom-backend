@@ -2,6 +2,7 @@ const _pwd = require("./password-helpers/index");
 const _auth = require("./auth-helpers/index");
 const sendEmail = require('./massage-routelet');
 const enums = require('./mail/states');
+const queries = require('./password-helpers/queries');
 
 module.exports = {
   update: async (req, res, next) => {
@@ -72,7 +73,7 @@ module.exports = {
 
       if (!token) {
         const hash = await _auth.hashPassword(newToken);
-        const createdToken = await _pwd.createPWDToken(hash, expirationDate, email);
+        const createdToken = await queries.createPWDToken(hash, expirationDate, email);
         sendEmail({ name: user.fullName, email: [user.email], newToken }, enums.PASSWORD, enums.generatekey);
         return res.status(201).send({ message: 'token generated successfully!' });
       }
