@@ -20,12 +20,12 @@ module.exports = {
       }
 
       // prep token & password validations
-      let { expirationDate } = await _auth.findTokenByUserEmail(user.email);
+      // let { expirationDate } = await _auth.findTokenByUserEmail(user.email);
       const passwordsAreEqual = await _auth.passwordsAreEqual(password, user.password);
       const token = _auth.signToken(user.id);
 
       if (passwordsAreEqual) {
-        return res.status(200).send({ auth: true, token, expirationDate, role: user.role });
+        return res.status(200).send({ auth: true, token, role: user.role });
       } else {
         return res.status(401).send({ message: "password is incorrect." });
       }
