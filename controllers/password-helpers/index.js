@@ -6,7 +6,8 @@ const {
   findUnexpiredTokenByEmail,
   setTokenExpirationDate,
   findPWDTokenByEmail,
-  updatePWDToken
+  updatePWDToken,
+  createPWDToken
 } = require("./queries");
 
 module.exports = {
@@ -17,5 +18,6 @@ module.exports = {
   findUnexpiredTokenByEmail,
   setTokenExpirationDate,
   findPWDTokenByEmail,
-  updatePWDToken
+  updatePWDToken,
+  createPWDToken
 };

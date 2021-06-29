@@ -7,24 +7,24 @@ module.exports = {
   update: async (req, res, next) => {
     try {
       const roles = [1, -1];
-      const { password, id: userId } = req.body;
       const { id, originalUrl } = req;
       const user = await _pwd.findUserById(id);
-
-      if (!user) {
-        return res.status(404).send({ message: "used does not exist" });
-      }
-
       if (!roles.includes(user.role)) {
         return res.status(422).send({ message: "unauthorized user." });
+      }
+      
+      const { password, id: userId } = req.body;
+      const userToUpdate = await _pwd.findUserById(userId);
+      if (!userToUpdate) {
+        return res.status(404).send({ message: "used does not exist" });
       }
 
       // update the user
       const hash = await _auth.hashPassword(password);
-      await _pwd.updateUserPassword(hash, id);
+      await _pwd.updateUserPassword(hash, userId);
 
       // send email for updating user
-      sendEmail({ name: user.fullName, email: [user.email] }, enums.PASSWORD, enums.passwordUpdate);
+      sendEmail({ name: userToUpdate.fullName, email: [userToUpdate.email] }, enums.PASSWORD, enums.passwordUpdate);
       return res.status(201).send({ message: "password was successfully updated" });
     } catch (err) {
       next(err);
@@ -62,8 +62,7 @@ module.exports = {
   key: async (req, res, next) => {
     try {
       const { email } = req.body;
-      const { originalUrl } = req;
-
+    
       const expirationDate = await _pwd.setTokenExpirationDate();
       const user = await _auth.findUserByEmail(email);
       const token = await _pwd.findPWDTokenByEmail(email);
@@ -71,11 +70,11 @@ module.exports = {
 
       if (!token) {
         const hash = await _auth.hashPassword(newToken);
-        const createdToken = await _pwd.createPWDToken(hash, expirationDate, email);
+        await _pwd.createPWDToken(hash, expirationDate, email);
         sendEmail({ name: user.fullName, email: [user.email], newToken }, enums.PASSWORD, enums.generatekey);
         return res.status(201).send({ message: 'token generated successfully!' });
       }
-
+      
       await _pwd.updatePWDToken(token.id, newToken, expirationDate, email);
       sendEmail({ name: user.fullName, email: [user.email], newToken }, enums.PASSWORD, enums.generatekey);
       return res.status(201).send({ message: 'token generated successfully!' });

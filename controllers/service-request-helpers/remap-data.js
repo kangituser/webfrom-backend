@@ -4,11 +4,12 @@ const ASR = require("../../models/ASR");
 const BLOB = require("../../models/Blob");
 const CHANGE_LOG = require("../../models/Change_log");
 const CLOSE_STATUS = require("../../models/close-status");
+const { Op } = require("sequelize");
 
 module.exports = async (status, email_open) => {
   try {
     let serviceReq;
-    let query = email_open ? { status, email_open } : { status };
+    let query = email_open ? { status: { [Op.in]: status }, email_open } : { status };
 
     serviceReq = await ASR.findAll({
       where: query,

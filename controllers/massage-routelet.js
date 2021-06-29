@@ -7,7 +7,6 @@ const serviceRequest = require("./mail/sr");
 
 module.exports = async (data, route, state) => {
   try {
-
     if (route === enums.AUTH && state === enums.userWaiting) {
       // acknowledge user | send email to managers
       await axios.post(MAIL_ROUTE, { email: user.userWaitingApproval(data) });
@@ -26,6 +25,7 @@ module.exports = async (data, route, state) => {
 
     if (route === enums.PASSWORD && state === enums.generatekey) {
       // handle generate key
+      console.log(user.generateKey(data));
       await axios.post(MAIL_ROUTE, { email: user.generateKey(data) });
     }
 

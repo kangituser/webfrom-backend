@@ -1,6 +1,6 @@
 if (process.env.NODE_ENV == "development") {
-  require("dotenv/config");
 }
+require("dotenv/config");
 
 const middleware = require("./middleware/index.js");
 const db = require("./models/Utils/database");
